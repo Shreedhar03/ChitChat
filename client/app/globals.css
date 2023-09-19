@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+*{
+  user-select: none;
+}
 /* :root {
   --foreground-rgb: black;
   --background-rgb: white;

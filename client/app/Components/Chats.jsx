@@ -1,7 +1,10 @@
-import Image from 'next/image'
+"use client"
 import React from 'react'
+import { useRouter } from 'next/navigation'
 
 const Chats = () => {
+
+    const router = useRouter()
 
     const messagesData = [
         { photo: "https://t4.ftcdn.net/jpg/03/59/58/91/360_F_359589186_JDLl8dIWoBNf1iqEkHxhUeeOulx0wOC5.jpg", nos: 2, sender: "Rahul", latestMsg: "I won't be attending lectures....!", time: "16:05" },
@@ -16,14 +19,14 @@ const Chats = () => {
         { photo: "https://t4.ftcdn.net/jpg/03/59/58/91/360_F_359589186_JDLl8dIWoBNf1iqEkHxhUeeOulx0wOC5.jpg", nos: 1, sender: "Ethan", latestMsg: "I'm in! Let's do it.", time: "18:00" }
     ]
     return (
-        <div>
+        <div className='w-full'>
             {
                 messagesData?.map((chat, key) => {
                     return (
                         <div className="flex items-center justify-between px-3 py-5 bg-slate-50" key={key}>
                             <div className='flex gap-3 items-start'>
                                 <img src={chat.photo} alt='user' className='w-14 h-14 rounded-full object-cover' />
-                                <div>
+                                <div onClick={()=>router.push('/chat/yash')}>
                                     <p className=''>{chat.sender}</p>
                                     <p className='text-gray-500'>{chat.latestMsg.slice(0, 30)}{chat.latestMsg.length > 30 && '...'}</p>
                                 </div>
