@@ -1,23 +1,23 @@
 import React from 'react'
 import Message from './Message'
-import send from '../Assets/send.svg'
-import camera from '../Assets/camera.svg'
-import Image from 'next/image'
 import axios from 'axios'
 import { cookies } from 'next/headers'
+import SendMessage from './SendMessage'
 
 let currentUser
+let jwt;
 
 const fetchMessages = async (chatId) => {
     const cookieStore = cookies()
     const token = cookieStore.get('jwt')
+    jwt=token.value
     console.log("chatId", chatId)
     let { data } = await axios.get(`http://localhost:5000/api/allMessages/${chatId}`, {
         headers: {
             Authorization: `Bearer ${token.value}`
         }
     })
-    currentUser = data.currentUser._id
+    currentUser = data.currentUser[0]._id
     return data
 }
 const ChatBody = async ({ chatId }) => {
@@ -56,11 +56,7 @@ const ChatBody = async ({ chatId }) => {
                 <Message message="Great! I can't wait to try it out." time="10:50 AM" role={"receiver"} /> */}
             </div>
 
-            <div className="flex w-full max-w-[450px] justify-end fixed bottom-0 gap-3 p-4 bg-slate-50">
-                <Image src={camera} alt='camera' />
-                <input type="text" placeholder='Message' className='text-lg bg-slate-200 focus:outline-none rounded-xl px-4 py-2 w-[250px] transition-all shrink-0 placeholder:text-sm' />
-                <Image src={send} alt='send' />
-            </div>
+            <SendMessage chatId={chatId} token={jwt}/>
         </>
     )
 }
