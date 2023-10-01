@@ -8,11 +8,12 @@ import upload from '../Assets/upload.svg'
 import Spinner from '../Components/Spinner'
 import Image from 'next/image'
 
-const page = () => {
+const Register = () => {
     // console.log(process.env.CLOUDINARY_API)
     const router = useRouter()
     const [loading, setLoading] = useState(false)
     const [picConfirmMessage,setPicConfirmMessage]=useState('')
+    const [userMessage,setUserMessage]=useState('')
     const [credentials, setCredentials] = useState({
         fname: "",
         lname: "",
@@ -25,8 +26,12 @@ const page = () => {
         setCredentials({ ...credentials, [e.target.name]: e.target.value })
     }
     const handleSubmit = async (e) => {
-        setLoading(true)
         e.preventDefault()
+        if(credentials.pass!==credentials.conPass){
+            setUserMessage("Passwords do not match")
+            return
+        }
+        setLoading(true)
         console.log("submission started")
         let { data } = await axios.post(`http://localhost:5000/api/register`, { ...credentials })
         console.log(data.success, "token : ", data.token)
@@ -48,7 +53,7 @@ const page = () => {
                     body: data,
                 });
                 const responseData = await response.json();
-                console.log(responseData.url.toString());
+                // console.log(responseData.url.toString());
                 setLoading(false)
                 setPicConfirmMessage("Image Uploaded !")
                 setCredentials({ ...credentials, pic: responseData.url.toString() });
@@ -68,11 +73,12 @@ const page = () => {
                 <input type="text" onChange={handleChange} name='fname' value={credentials.fname} required className='text-lg focus:outline-none px-3 py-2 bg-[#434086] placeholder:text-gray-400 placeholder:text-sm text-gray-900 font-semibold rounded-xl' placeholder='First Name' autoComplete='off' />
                 <input type="text" onChange={handleChange} name='lname' value={credentials.lname} required className='text-lg focus:outline-none px-3 py-2 bg-[#434086] placeholder:text-gray-400 placeholder:text-sm text-gray-900 font-semibold rounded-xl' placeholder='Last Name' autoComplete='off' />
                 <input type="text" onChange={handleChange} name='username' value={credentials.username} required className='text-lg focus:outline-none px-3 py-2 bg-[#434086] placeholder:text-gray-400 placeholder:text-sm text-gray-900 font-semibold rounded-xl' placeholder='Username' autoComplete='off' />
-                <input type="text" onChange={handleChange} name='pass' value={credentials.pass} required className='text-lg focus:outline-none px-3 py-2 bg-[#434086] placeholder:text-gray-400 placeholder:text-sm text-gray-900 font-semibold rounded-xl' placeholder='Password' autoComplete='off' />
-                <input type="text" onChange={handleChange} name='conPass' value={credentials.conPass} required className='text-lg focus:outline-none px-3 py-2 bg-[#434086] placeholder:text-gray-400 placeholder:text-sm text-gray-900 font-semibold rounded-xl' placeholder='Confirm Password' autoComplete='off' />
+                <input type="password" onChange={handleChange} name='pass' value={credentials.pass} required className='text-lg focus:outline-none px-3 py-2 bg-[#434086] placeholder:text-gray-400 placeholder:text-sm text-gray-900 font-semibold rounded-xl' placeholder='Password' autoComplete='off' />
+                <input type="password" onChange={handleChange} name='conPass' value={credentials.conPass} required className='text-lg focus:outline-none px-3 py-2 bg-[#434086] placeholder:text-gray-400 placeholder:text-sm text-gray-900 font-semibold rounded-xl' placeholder='Confirm Password' autoComplete='off' />
+                <p className='font-semibold text-red-400'>{userMessage}</p>
                 <input type="file" name="pic" id="pic" className='hidden' onChange={(e) => postImage(e.target.files[0])} />
                 <label htmlFor='pic' className='font-semibold flex items-center text-gray-800 my-2 gap-2 flex-row-reverse justify-end'>Profile Picture<Image src={upload} alt="upload" width={30}/></label>
-                <p>{picConfirmMessage}</p>
+                <p className='font-semibold text-green-400'>{picConfirmMessage}</p>
                 <button type='submit' disabled={loading} className='bg-[#1c274c] flex justify-center py-2 font-semibold text-primary text-xl rounded-xl'>
                     {loading ? <Spinner /> : "Register"}
                 </button>
@@ -82,4 +88,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Register

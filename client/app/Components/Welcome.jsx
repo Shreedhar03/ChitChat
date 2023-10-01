@@ -3,7 +3,7 @@ import React from 'react'
 import logo from '../Assets/logo.svg'
 import Link from 'next/link'
 
-const Login = () => {
+const Welcome = () => {
     return (
         <div className='h-screen bg-primary flex flex-col items-center justify-center gap-4'>
             <Image src={logo} alt='logo'/>
@@ -13,4 +13,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default Welcome

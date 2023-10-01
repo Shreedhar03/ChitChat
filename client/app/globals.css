@@ -5,6 +5,10 @@
 *{
   user-select: none;
 }
+#messageBody{
+  background: url('../app/Assets/background.png');
+  background-size: cover;
+}
 /* :root {
   --foreground-rgb: black;
   --background-rgb: white;

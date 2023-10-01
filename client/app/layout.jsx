@@ -1,3 +1,4 @@
+import ContextProvider, { ChatContext } from './Context/ChatContext'
 import './globals.css'
 import { Montserrat } from 'next/font/google'
 
@@ -13,7 +14,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={montserrat.className}>
         <div id="root" className='max-w-[450px] mx-auto'>
-          {children}
+          <ContextProvider>
+            {children}
+          </ContextProvider>
         </div>
       </body>
     </html>

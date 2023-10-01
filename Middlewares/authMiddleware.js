@@ -9,15 +9,21 @@ const authenticateUser = asyncHandler(async (req, res, next) => {
         try {
             token = req.headers.authorization.split(" ")[1]
             const decoded = jwt.verify(token, process.env.SECRET)
-            req.user = await userModel.findById(decoded.id)
+            let user = await userModel.findById(decoded.id)
+            if (user) {
+                req.user = user
+                req.success = true
+            } else {
+                req.success = false
+            }
 
             next()
         } catch (err) {
-            return res.json({err:err.message})
+            return res.json({ err: err.message })
             console.log(err)
         }
     } else {
-        return res.status(401).json({message:"Not authorized"})
+        return res.status(401).json({ message: "Not authorized" })
     }
 })
 
