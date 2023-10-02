@@ -7,26 +7,44 @@ import Image from 'next/image'
 import axios from 'axios'
 import io from 'socket.io-client'
 
-const SendMessage = ({chatId,token}) => {
+let socket = io('http://localhost:5000')
+
+const SendMessage = ({chatId,token,currentUser}) => {
 
     const [message, setMessage] = useState("")
+    const [demo,setDemo] = useState("")
 
     const handleChange = (e) => {
         setMessage(e.target.value)
     }
     const handleSubmit = async (e) => {
-
         e.preventDefault()
-        await axios.post(`http://localhost:5000/api/sendMessage`, {content:message,chatId} , {
+        let {data} = await axios.post(`http://localhost:5000/api/sendMessage`, {content:message,chatId} , {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         })
+        
+        console.log(data)
+        socket.emit("new message" , data)
     }
 
     useEffect(()=>{
-        let socket = io('http://localhost:5000')
+        socket.emit("setup",currentUser)
+        socket.on("connection",()=>console.log("connection done"))
+        socket.emit("joinChat",chatId)
+        socket.on()
     },[])
+    
+    useEffect(()=>{
+        console.log("socket")
+        // let socket = io('http://localhost:5000')
+        socket.on("message received",(newMessageReceived=>{
+            console.log(newMessageReceived)
+            console.log("received")
+        }))
+        console.log(demo)
+    })
     return (
         <form onSubmit={handleSubmit} className="flex w-full max-w-[450px] justify-end fixed bottom-0 gap-3 p-4 bg-slate-50">
             <Image src={camera} alt='camera' />

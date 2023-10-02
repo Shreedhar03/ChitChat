@@ -2,13 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+::-webkit-scrollbar{
+  display: none;
+}
 *{
   user-select: none;
+  scroll-behavior: auto;
 }
 #messageBody{
   background: url('../app/Assets/background.png');
   background-size: cover;
 }
+
 /* :root {
   --foreground-rgb: black;
   --background-rgb: white;
