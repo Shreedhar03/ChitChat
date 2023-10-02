@@ -26,10 +26,10 @@ const ChatContent = ({ chatId, token, currentUser, chatBody }) => {
     const handleChange = (e) => {
         setMessage(e.target.value)
         clearTimeout(typeTimeOut)
-        socket.emit('typing',chatId,currentUser)
-        typeTimeOut = setTimeout(()=>{
-            socket.emit('stopTyping',chatId,currentUser)
-        },2000)
+        socket.emit('typing', chatId, currentUser)
+        typeTimeOut = setTimeout(() => {
+            socket.emit('stopTyping', chatId, currentUser)
+        }, 2000)
     }
     const handleSubmit = async (e) => {
         setMessage("")
@@ -55,7 +55,7 @@ const ChatContent = ({ chatId, token, currentUser, chatBody }) => {
         socket.emit("setup", currentUser)
         socket.on("connection", () => console.log("connection done"))
         socket.emit("join chat", chatId)
-        
+
         // socket.on()
     }, [])
 
@@ -70,20 +70,20 @@ const ChatContent = ({ chatId, token, currentUser, chatBody }) => {
             setMessages([...messages, newMessageReceived])
         })
         socket.on("senderTyping", (user) => {
-            console.log("user",user)
-            if(currentUser._id!==user){
+            console.log("user", user)
+            if (currentUser._id !== user) {
                 setTyping(true)
                 console.log("typing")
             }
-           
+
         })
         socket.on("senderStoppedTyping", (user) => {
-            console.log("user",user)
-            if(currentUser!==user){
+            console.log("user", user)
+            if (currentUser !== user) {
                 setTyping(false)
                 console.log("stop typing")
             }
-           
+
         })
         // console.log(demo)
     })
@@ -92,14 +92,17 @@ const ChatContent = ({ chatId, token, currentUser, chatBody }) => {
         <>
 
             {
-                messages.map((chat) => {
+                messages.map((chat,key) => {
                     // return <Message message={chat.content} time="09:30 AM" role={"sender"} />
-                    return <Message typing={typing} message={chat.content} id={chat._id} time={chat.time} role={chat.sender._id === currentUser ? "receiver" : "sender"} />
+                    return <div key={key}>
+                        <Message typing={typing} message={chat.content} id={chat._id} time={chat.time} role={chat.sender._id === currentUser ? "receiver" : "sender"} />
+                    </div>
+
                 })
             }
 
             {
-                typing && 
+                typing &&
                 <div className='w-20 p-2 text-sm rounded-lg flex items-center justify-center gap-2'>
                     <div className='w-4 h-4 bg-primary animate-pulse rounded-full'></div>
                     <div className='w-4 h-4 bg-primary animate-pulse delay rounded-full'></div>
