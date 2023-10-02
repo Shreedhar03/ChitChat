@@ -9,7 +9,7 @@ import Spinner from '../Components/Spinner'
 import { ChatContext } from '../Context/ChatContext'
 import Cookies from 'js-cookie'
 
-const page = () => {
+const Login = () => {
     const { setUser } = useContext(ChatContext)
     const router = useRouter()
     const [loading, setLoading] = useState(false)
@@ -58,4 +58,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Login
