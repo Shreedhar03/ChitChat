@@ -26,7 +26,7 @@ const Login = () => {
         e.preventDefault()
         console.log("submission started")
         try {
-            let { data } = await axios.post(`http://localhost:5000/api/login`, { ...credentials })
+            let { data } = await axios.post(`https://chitchat-bbfi.onrender.com/api/login`, { ...credentials })
             setLoading(false)
             console.log(data)
             setMsg(data.message)

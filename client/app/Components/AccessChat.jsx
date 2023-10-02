@@ -15,7 +15,7 @@ const AccessChat = ({ user }) => {
             userId
         };
         try {
-            const response = await axios.post('http://localhost:5000/api/accessChat', body, {
+            const response = await axios.post('https://chitchat-bbfi.onrender.com/api/accessChat', body, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

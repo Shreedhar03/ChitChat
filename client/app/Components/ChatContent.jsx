@@ -10,7 +10,7 @@ import Message from './Message'
 import moment from 'moment'
 
 
-let socket = io('http://localhost:5000')
+let socket = io('https://chitchat-bbfi.onrender.com')
 
 const ChatContent = ({ chatId, token, currentUser, chatBody }) => {
     // const allMessages =  fetchMessages(chatId).messages
@@ -35,7 +35,7 @@ const ChatContent = ({ chatId, token, currentUser, chatBody }) => {
         setMessage("")
         setTyping(false)
         e.preventDefault()
-        let { data } = await axios.post(`http://localhost:5000/api/sendMessage`, { content: message, chatId, time, dated }, {
+        let { data } = await axios.post(`https://chitchat-bbfi.onrender.com/api/sendMessage`, { content: message, chatId, time, dated }, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -63,7 +63,7 @@ const ChatContent = ({ chatId, token, currentUser, chatBody }) => {
         setTime(moment().format("HH:mm"))
         setDated(moment().format("DD MMM YYYY"))
         console.log("socket")
-        // let socket = io('http://localhost:5000')
+        // let socket = io('https://chitchat-bbfi.onrender.com')
         socket.on("message received", newMessageReceived => {
             console.log("newMessageReceived", newMessageReceived)
             console.log("received")

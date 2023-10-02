@@ -20,7 +20,7 @@ const fetchUsers = async () => {
             // Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MDdlNWY1NWE0NGJhMDRlOGIyNjFlZSIsImlhdCI6MTY5NTQ4MTEzNSwiZXhwIjoxNjk4MDczMTM1fQ.5RzP8o0QT37tJBV9CSc-VBl6doFkQEO1i9ycfg33bzo`
         },
         method: "GET",
-        url: `http://localhost:5000/api/searchUser?keyword=''`
+        url: `https://chitchat-bbfi.onrender.com/api/searchUser?keyword=''`
     })
     currentUser = data.currentUser
     return data.users
@@ -31,7 +31,7 @@ const fetchChats = async () => {
     const token = cookieStore.get('jwt')
 
     try {
-        const { data } = await axios.get('http://localhost:5000/api/fetchChats', {
+        const { data } = await axios.get('https://chitchat-bbfi.onrender.com/api/fetchChats', {
             headers: {
                 Authorization: `Bearer ${token.value}`
             }

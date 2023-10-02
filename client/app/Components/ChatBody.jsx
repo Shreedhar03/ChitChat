@@ -11,7 +11,7 @@ const fetchMessages = async (chatId) => {
     const token = cookieStore.get('jwt')
     jwt = token.value
     console.log("chatId", chatId)
-    let { data } = await axios.get(`http://localhost:5000/api/allMessages/${chatId}`, {
+    let { data } = await axios.get(`https://chitchat-bbfi.onrender.com/api/allMessages/${chatId}`, {
         headers: {
             Authorization: `Bearer ${token.value}`
         }
