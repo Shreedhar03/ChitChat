@@ -7,52 +7,84 @@ import Image from 'next/image'
 import axios from 'axios'
 import io from 'socket.io-client'
 import Message from './Message'
+import moment from 'moment'
+
 
 let socket = io('http://localhost:5000')
 
-const SendMessage = ({ chatId, token, currentUser, chatBody }) => {
-
+const ChatContent = ({ chatId, token, currentUser, chatBody }) => {
+    // const allMessages =  fetchMessages(chatId).messages
+    // console.log(allMessages)
     const [messages, setMessages] = useState(chatBody.messages)
     const [message, setMessage] = useState("")
-    const [demo, setDemo] = useState("")
+    const [time, setTime] = useState(moment().format("HH:mm"))
+    const [dated, setDated] = useState(moment().format("DD MMM YYYY"))
+    const [typing, setTyping] = useState(false)
+
+    let typeTimeOut;
 
     const handleChange = (e) => {
         setMessage(e.target.value)
+        clearTimeout(typeTimeOut)
+        socket.emit('typing',chatId,currentUser)
+        typeTimeOut = setTimeout(()=>{
+            socket.emit('stopTyping',chatId,currentUser)
+        },2000)
     }
     const handleSubmit = async (e) => {
         setMessage("")
+        setTyping(false)
         e.preventDefault()
-        let { data } = await axios.post(`http://localhost:5000/api/sendMessage`, { content: message, chatId }, {
+        let { data } = await axios.post(`http://localhost:5000/api/sendMessage`, { content: message, chatId, time, dated }, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         })
 
         console.log(data)
-        socket.emit("new message", data,chatId)
-        setMessages([...messages,data])
+        socket.emit("new message", data, chatId)
+        setMessages([...messages, data])
     }
-    useEffect(()=>{
-            // window.scroll(0,document.getElementById('messageBody').scrollHeight)
-            let div = document.getElementById('messageBodY')
-            div.scroll({ top: div.scrollHeight })
-        },[messages])
+    useEffect(() => {
+        // window.scroll(0,document.getElementById('messageBody').scrollHeight)
+        let div = document.getElementById('messageBodY')
+        div.scroll({ top: div.scrollHeight })
+    }, [messages])
 
     useEffect(() => {
         socket.emit("setup", currentUser)
         socket.on("connection", () => console.log("connection done"))
         socket.emit("join chat", chatId)
+        
         // socket.on()
     }, [])
 
     useEffect(() => {
+        setTime(moment().format("HH:mm"))
+        setDated(moment().format("DD MMM YYYY"))
         console.log("socket")
         // let socket = io('http://localhost:5000')
-        socket.on("message received", (newMessageReceived => {
-            console.log("newMessageReceived",newMessageReceived)
+        socket.on("message received", newMessageReceived => {
+            console.log("newMessageReceived", newMessageReceived)
             console.log("received")
-            setMessages([...messages,newMessageReceived])
-        }))
+            setMessages([...messages, newMessageReceived])
+        })
+        socket.on("senderTyping", (user) => {
+            console.log("user",user)
+            if(currentUser._id!==user){
+                setTyping(true)
+                console.log("typing")
+            }
+           
+        })
+        socket.on("senderStoppedTyping", (user) => {
+            console.log("user",user)
+            if(currentUser!==user){
+                setTyping(false)
+                console.log("stop typing")
+            }
+           
+        })
         // console.log(demo)
     })
     return (
@@ -60,10 +92,19 @@ const SendMessage = ({ chatId, token, currentUser, chatBody }) => {
         <>
 
             {
-                messages.map(chat => {
+                messages.map((chat) => {
                     // return <Message message={chat.content} time="09:30 AM" role={"sender"} />
-                    return <Message message={chat.content} time="09:30 AM" role={chat.sender._id === currentUser ? "receiver" : "sender"} />
+                    return <Message typing={typing} message={chat.content} id={chat._id} time={chat.time} role={chat.sender._id === currentUser ? "receiver" : "sender"} />
                 })
+            }
+
+            {
+                typing && 
+                <div className='w-20 p-2 text-sm rounded-lg flex items-center justify-center gap-2'>
+                    <div className='w-4 h-4 bg-primary animate-pulse rounded-full'></div>
+                    <div className='w-4 h-4 bg-primary animate-pulse delay rounded-full'></div>
+                    <div className='w-4 h-4 bg-primary animate-pulse rounded-full'></div>
+                </div>
             }
 
             <form onSubmit={handleSubmit} className="flex w-full max-w-[450px] justify-end fixed bottom-0 gap-3 p-4 bg-slate-50">
@@ -77,5 +118,5 @@ const SendMessage = ({ chatId, token, currentUser, chatBody }) => {
     )
 }
 
-export default SendMessage
+export default ChatContent
 

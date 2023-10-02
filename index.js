@@ -17,7 +17,7 @@ app.use('/api', route)
 
 const connectToSocket = (server) => {
     const io = require('socket.io')(server, {
-        pingTimeout: 60000,
+        pingTimeout: 600000,
         cors: {
             origin: "http://localhost:3000"
         }
@@ -33,14 +33,21 @@ const connectToSocket = (server) => {
 
         socket.on("join chat", (room) => {
             socket.join(room)
-            console.log("User joined the room", room)
+            console.log(`User joined the room ${room}`.bgGreen)
         })
-
+        socket.on('typing',(room,sender)=>{
+            console.log("-----------------typing--------------".bgBlue ,sender)
+            socket.to(room).emit('senderTyping',sender)
+        })
+        socket.on('stopTyping',(room,sender)=>{
+            console.log("-----------------stopped typing--------------".bgRed ,sender)
+            socket.to(room).emit('senderStoppedTyping',sender)
+        })
         socket.on("new message", (newMessageReceived, room) => {
             let chat = newMessageReceived.chat
             // console.log("newMessageReceived",newMessageReceived)
             if (!chat.users) return console.log("chat.user not defined")
-            console.log("room", room)
+            console.log(`room ${room}`.bgGreen)
             chat.users.forEach(user => {
                 console.log(user._id)
                 if (user._id == newMessageReceived.sender._id) {

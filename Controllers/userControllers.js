@@ -144,12 +144,14 @@ const createGroupChat = asyncHandler(async (req, res) => {
 })
 // send messages
 const sendMessage = asyncHandler(async (req, res) => {
-    const { content, chatId } = req.body
+    const { content, chatId,time,dated } = req.body
 
     let newMessage = {
         sender: req.user._id,
         content,
-        chat: chatId
+        chat: chatId,
+        time,
+        dated
     }
 
     try {

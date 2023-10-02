@@ -7,13 +7,15 @@
 }
 *{
   user-select: none;
-  scroll-behavior: auto;
+  scroll-behavior: smooth;
 }
 #messageBody{
   background: url('../app/Assets/background.png');
   background-size: cover;
 }
-
+.delay{
+  animation-delay: 1000ms;
+}
 /* :root {
   --foreground-rgb: black;
   --background-rgb: white;

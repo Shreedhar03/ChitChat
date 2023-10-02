@@ -16,7 +16,7 @@ const fetchMessages = async (chatId) => {
             Authorization: `Bearer ${token.value}`
         }
     })
-    currentUser = data.currentUser[0]._id
+    currentUser = data?.currentUser?.[0]._id
     return data
 }
 const ChatBody = async ({ chatId }) => {
