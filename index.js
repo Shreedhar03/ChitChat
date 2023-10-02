@@ -9,7 +9,9 @@ const cors = require('cors')
 // const bodyParser = require('body-parser');
 
 let server
-app.use(cors())
+app.use(cors({
+    origin: "https://chitchat-peach.vercel.app"
+}))
 app.use(express.json())
 // app.use(bodyParser.json())
 app.use('/api', route)
@@ -19,7 +21,7 @@ const connectToSocket = (server) => {
     const io = require('socket.io')(server, {
         pingTimeout: 600000,
         cors: {
-            origin: "http://localhost:3000"
+            origin: "https://chitchat-peach.vercel.app"
         }
     })
     io.on('connection', (socket) => {
@@ -35,13 +37,13 @@ const connectToSocket = (server) => {
             socket.join(room)
             console.log(`User joined the room ${room}`.bgGreen)
         })
-        socket.on('typing',(room,sender)=>{
-            console.log("-----------------typing--------------".bgBlue ,sender)
-            socket.to(room).emit('senderTyping',sender)
+        socket.on('typing', (room, sender) => {
+            console.log("-----------------typing--------------".bgBlue, sender)
+            socket.to(room).emit('senderTyping', sender)
         })
-        socket.on('stopTyping',(room,sender)=>{
-            console.log("-----------------stopped typing--------------".bgRed ,sender)
-            socket.to(room).emit('senderStoppedTyping',sender)
+        socket.on('stopTyping', (room, sender) => {
+            console.log("-----------------stopped typing--------------".bgRed, sender)
+            socket.to(room).emit('senderStoppedTyping', sender)
         })
         socket.on("new message", (newMessageReceived, room) => {
             let chat = newMessageReceived.chat
