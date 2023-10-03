@@ -20,7 +20,7 @@ const Register = () => {
         username: "",
         pass: "",
         conPass: "",
-        pic: ""
+        pic: undefined
     })
     const handleChange = (e) => {
         setCredentials({ ...credentials, [e.target.name]: e.target.value })

@@ -92,9 +92,9 @@ const ChatContent = ({ chatId, token, currentUser, chatBody }) => {
         <>
 
             {
-                messages.map((chat,key) => {
+                messages.map((chat, key) => {
                     // return <Message message={chat.content} time="09:30 AM" role={"sender"} />
-                    return <div key={key}>
+                    return <div key={key} className={`max-w-[192px] flex flex-col gap-1 my-2 ${(chat.sender._id===currentUser) && 'self-end'}`}>
                         <Message typing={typing} message={chat.content} id={chat._id} time={chat.time} role={chat.sender._id === currentUser ? "receiver" : "sender"} />
                     </div>
 

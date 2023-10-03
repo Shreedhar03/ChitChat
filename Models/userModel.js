@@ -7,7 +7,8 @@ const userSchema = mongoose.Schema({
     pass: { type: String, trim: true },
     pic: {
         type: String,
-        default: "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+        default: "https://cdn-icons-png.flaticon.com/512/149/149071.png",
+        required:false
     }
 }, { timestamps: true })
 

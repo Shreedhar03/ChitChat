@@ -48,7 +48,7 @@ const SendMessage = ({chatId,token,currentUser}) => {
     return (
         <form onSubmit={handleSubmit} className="flex w-full max-w-[450px] justify-end fixed bottom-0 gap-3 p-4 bg-slate-50">
             <Image src={camera} alt='camera' />
-            <input type="text" value={message} onChange={handleChange} placeholder='Message' className='text-lg bg-slate-200 focus:outline-none rounded-xl px-4 py-2 w-[250px] transition-all shrink-0 placeholder:text-sm' />
+            <input type="text" value={message} onChange={handleChange} placeholder='Message' className='text-lg bg-slate-200 focus:outline-none rounded-xl px-4 py-2 transition-all shrink-0 placeholder:text-sm' />
             <button type="submit">
                 <Image src={send} alt='send' />
             </button>
