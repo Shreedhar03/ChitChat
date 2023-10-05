@@ -9,14 +9,15 @@ let jwt;
 const fetchMessages = async (chatId) => {
     const cookieStore = cookies()
     const token = cookieStore.get('jwt')
+    currentUser = cookieStore.get('currentUser')
     jwt = token.value
     console.log("chatId", chatId)
-    let { data } = await axios.get(`https://chitchat-bbfi.onrender.com/api/allMessages/${chatId}`, {
+    let { data } = await axios.get(`${process.env.NEXT_PUBLIC_URL}/api/allMessages/${chatId}`, {
         headers: {
             Authorization: `Bearer ${token.value}`
         }
     })
-    currentUser = data?.currentUser?.[0]._id
+    // currentUser = data?.currentUser?.[0]._id
     return data
 }
 const ChatBody = async ({ chatId }) => {

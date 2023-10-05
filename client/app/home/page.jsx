@@ -7,6 +7,7 @@ import plus from '../Assets/plus.svg'
 import AllUsers from '../Components/AllUsers'
 import { cookies } from 'next/headers'
 import axios from 'axios'
+import Link from 'next/link'
 
 let currentUser
 
@@ -20,18 +21,19 @@ const fetchUsers = async () => {
             // Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MDdlNWY1NWE0NGJhMDRlOGIyNjFlZSIsImlhdCI6MTY5NTQ4MTEzNSwiZXhwIjoxNjk4MDczMTM1fQ.5RzP8o0QT37tJBV9CSc-VBl6doFkQEO1i9ycfg33bzo`
         },
         method: "GET",
-        url: `https://chitchat-bbfi.onrender.com/api/searchUser?keyword=''`
+        url: `${process.env.NEXT_PUBLIC_URL}/api/searchUser?keyword=''`
     })
     currentUser = data.currentUser
     return data.users
 }
 const fetchChats = async () => {
     // "use server"
+    console.log("----Fetching Ctahs----")
     const cookieStore = cookies()
     const token = cookieStore.get('jwt')
 
     try {
-        const { data } = await axios.get('https://chitchat-bbfi.onrender.com/api/fetchChats', {
+        const { data } = await axios.get(`${process.env.NEXT_PUBLIC_URL}/api/fetchChats`, {
             headers: {
                 Authorization: `Bearer ${token.value}`
             }
@@ -54,6 +56,10 @@ const Home = async () => {
                 <Navbar currentUser={currentUser} />
                 <Tabs />
             </div>
+
+            <p className='text-center my-4'>
+            <Link href={'/search'}>Connect with your Friends</Link>
+            </p>
             <AllUsers fetchUsers={fetchUsers} currentUser={currentUser}/>
             <Chats chats={chats} currentUser={currentUser}/>
             <Image src={plus} alt='plus' className='fixed bottom-4 right-4' />

@@ -26,12 +26,12 @@ const Login = () => {
         e.preventDefault()
         console.log("submission started")
         try {
-            let { data } = await axios.post(`https://chitchat-bbfi.onrender.com/api/login`, { ...credentials })
+            let { data } = await axios.post(`${process.env.NEXT_PUBLIC_URL}/api/login`, { ...credentials })
             setLoading(false)
             console.log(data)
             setMsg(data.message)
             if (data.success) {
-
+                Cookies.set('currentUser',data.user._id)
                 setUser(data.user.fname + data.user.lname)
                 Cookies.set('jwt', data.token, {
                     expires: 15, secure: true

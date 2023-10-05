@@ -8,13 +8,15 @@ import axios from 'axios'
 import io from 'socket.io-client'
 import Message from './Message'
 import moment from 'moment'
+import Cookies from 'js-cookie'
 
 
-let socket = io('https://chitchat-bbfi.onrender.com')
+let socket = io(`${process.env.NEXT_PUBLIC_URL}`)
 
-const ChatContent = ({ chatId, token, currentUser, chatBody }) => {
+const ChatContent = ({ chatId, token, chatBody }) => {
     // const allMessages =  fetchMessages(chatId).messages
     // console.log(allMessages)
+    const [currentUser,setCurrentUser] = useState(Cookies.get('currentUser'))
     const [messages, setMessages] = useState(chatBody.messages)
     const [message, setMessage] = useState("")
     const [time, setTime] = useState(moment().format("HH:mm"))
@@ -35,13 +37,16 @@ const ChatContent = ({ chatId, token, currentUser, chatBody }) => {
         setMessage("")
         setTyping(false)
         e.preventDefault()
-        let { data } = await axios.post(`https://chitchat-bbfi.onrender.com/api/sendMessage`, { content: message, chatId, time, dated }, {
+        let { data } = await axios.post(`${process.env.NEXT_PUBLIC_URL}/api/sendMessage`, { content: message, chatId, time, dated }, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         })
 
         console.log(data)
+        console.log("-------------------",data,"-------------------")
+        console.log(data.sender._id==currentUser)
+        console.log("-------------------currentUser",currentUser,"-------------------")
         socket.emit("new message", data, chatId)
         setMessages([...messages, data])
     }
@@ -49,6 +54,7 @@ const ChatContent = ({ chatId, token, currentUser, chatBody }) => {
         // window.scroll(0,document.getElementById('messageBody').scrollHeight)
         let div = document.getElementById('messageBodY')
         div.scroll({ top: div.scrollHeight })
+        
     }, [messages])
 
     useEffect(() => {
@@ -63,7 +69,7 @@ const ChatContent = ({ chatId, token, currentUser, chatBody }) => {
         setTime(moment().format("HH:mm"))
         setDated(moment().format("DD MMM YYYY"))
         console.log("socket")
-        // let socket = io('https://chitchat-bbfi.onrender.com')
+        // let socket = io('process.env.NEXT_PUBLIC_URL')
         socket.on("message received", newMessageReceived => {
             console.log("newMessageReceived", newMessageReceived)
             console.log("received")
@@ -71,15 +77,17 @@ const ChatContent = ({ chatId, token, currentUser, chatBody }) => {
         })
         socket.on("senderTyping", (user) => {
             console.log("user", user)
-            if (currentUser._id !== user) {
+            console.log("currentUser", currentUser)
+            if (currentUser != user) {
                 setTyping(true)
                 console.log("typing")
             }
-
+            
         })
         socket.on("senderStoppedTyping", (user) => {
             console.log("user", user)
-            if (currentUser !== user) {
+            console.log("currentUser", currentUser)
+            if (currentUser != user) {
                 setTyping(false)
                 console.log("stop typing")
             }
@@ -94,8 +102,8 @@ const ChatContent = ({ chatId, token, currentUser, chatBody }) => {
             {
                 messages.map((chat, key) => {
                     // return <Message message={chat.content} time="09:30 AM" role={"sender"} />
-                    return <div key={key} className={`max-w-[192px] flex flex-col gap-1 my-2 ${(chat.sender._id===currentUser) && 'self-end'}`}>
-                        <Message typing={typing} message={chat.content} id={chat._id} time={chat.time} role={chat.sender._id === currentUser ? "receiver" : "sender"} />
+                    return <div key={key} className={`max-w-[192px] flex flex-col gap-1 my-2 ${(chat.sender._id==currentUser) ? 'self-end' : 'self-start'}`}>
+                        <Message typing={typing} message={chat.content} id={chat._id} time={chat.time} role={chat.sender._id == currentUser ? "receiver" : "sender"} />
                     </div>
 
                 })

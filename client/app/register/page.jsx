@@ -33,7 +33,7 @@ const Register = () => {
         }
         setLoading(true)
         console.log("submission started")
-        let { data } = await axios.post(`https://chitchat-bbfi.onrender.com/api/register`, { ...credentials })
+        let { data } = await axios.post(`${process.env.NEXT_PUBLIC_URL}/api/register`, { ...credentials })
         console.log(data.success, "token : ", data.token)
         data.success && router.push('/login')
         setLoading(false)

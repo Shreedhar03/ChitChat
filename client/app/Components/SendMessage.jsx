@@ -7,7 +7,7 @@ import Image from 'next/image'
 import axios from 'axios'
 import io from 'socket.io-client'
 
-let socket = io('https://chitchat-bbfi.onrender.com')
+let socket = io('process.env.NEXT_PUBLIC_URL')
 
 const SendMessage = ({chatId,token,currentUser}) => {
 
@@ -19,7 +19,7 @@ const SendMessage = ({chatId,token,currentUser}) => {
     }
     const handleSubmit = async (e) => {
         e.preventDefault()
-        let {data} = await axios.post(`https://chitchat-bbfi.onrender.com/api/sendMessage`, {content:message,chatId} , {
+        let {data} = await axios.post(`${process.env.NEXT_PUBLIC_URL}/api/sendMessage`, {content:message,chatId} , {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -38,7 +38,7 @@ const SendMessage = ({chatId,token,currentUser}) => {
     
     useEffect(()=>{
         console.log("socket")
-        // let socket = io('https://chitchat-bbfi.onrender.com')
+        // let socket = io('process.env.NEXT_PUBLIC_URL')
         socket.on("message received",(newMessageReceived=>{
             console.log(newMessageReceived)
             console.log("received")

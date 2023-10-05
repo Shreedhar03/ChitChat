@@ -10,7 +10,7 @@ const cors = require('cors')
 
 let server
 app.use(cors({
-    origin: "https://chitchat-peach.vercel.app"
+    origin: `${process.env.URL}`
 }))
 app.use(express.json())
 // app.use(bodyParser.json())
@@ -21,14 +21,14 @@ const connectToSocket = (server) => {
     const io = require('socket.io')(server, {
         pingTimeout: 600000,
         cors: {
-            origin: "https://chitchat-peach.vercel.app"
+            origin: `${process.env.URL}`
         }
     })
     io.on('connection', (socket) => {
         // console.log("connected to socket.io ")
 
         socket.on('setup', (currentUser) => {
-            socket.join(currentUser._id)
+            socket.join(currentUser)
             console.log("userData._id", currentUser)
             socket.emit("connected")
         })
