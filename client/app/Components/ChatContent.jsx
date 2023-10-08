@@ -16,7 +16,7 @@ let socket = io(`${process.env.NEXT_PUBLIC_URL}`)
 const ChatContent = ({ chatId, token, chatBody }) => {
     // const allMessages =  fetchMessages(chatId).messages
     // console.log(allMessages)
-    const [currentUser,setCurrentUser] = useState(Cookies.get('currentUser'))
+    const [currentUser, setCurrentUser] = useState(Cookies.get('currentUser'))
     const [messages, setMessages] = useState(chatBody.messages)
     const [message, setMessage] = useState("")
     const [time, setTime] = useState(moment().format("HH:mm"))
@@ -44,9 +44,9 @@ const ChatContent = ({ chatId, token, chatBody }) => {
         })
 
         console.log(data)
-        console.log("-------------------",data,"-------------------")
-        console.log(data.sender._id==currentUser)
-        console.log("-------------------currentUser",currentUser,"-------------------")
+        console.log("-------------------", data, "-------------------")
+        console.log(data.sender._id == currentUser)
+        console.log("-------------------currentUser", currentUser, "-------------------")
         socket.emit("new message", data, chatId)
         setMessages([...messages, data])
     }
@@ -54,7 +54,7 @@ const ChatContent = ({ chatId, token, chatBody }) => {
         // window.scroll(0,document.getElementById('messageBody').scrollHeight)
         let div = document.getElementById('messageBodY')
         div.scroll({ top: div.scrollHeight })
-        
+
     }, [messages])
 
     useEffect(() => {
@@ -82,7 +82,7 @@ const ChatContent = ({ chatId, token, chatBody }) => {
                 setTyping(true)
                 console.log("typing")
             }
-            
+
         })
         socket.on("senderStoppedTyping", (user) => {
             console.log("user", user)
@@ -102,7 +102,7 @@ const ChatContent = ({ chatId, token, chatBody }) => {
             {
                 messages.map((chat, key) => {
                     // return <Message message={chat.content} time="09:30 AM" role={"sender"} />
-                    return <div key={key} className={`max-w-[192px] flex flex-col gap-1 my-2 ${(chat.sender._id==currentUser) ? 'self-end' : 'self-start'}`}>
+                    return <div key={key} className={`max-w-[192px] flex flex-col gap-1 my-2 ${(chat.sender._id == currentUser) ? 'self-end' : 'self-start'}`}>
                         <Message typing={typing} message={chat.content} id={chat._id} time={chat.time} role={chat.sender._id == currentUser ? "receiver" : "sender"} />
                     </div>
 
@@ -118,12 +118,10 @@ const ChatContent = ({ chatId, token, chatBody }) => {
                 </div>
             }
 
-            <form onSubmit={handleSubmit} className="flex w-full max-w-[450px] justify-end fixed bottom-0 gap-3 p-4 bg-slate-50">
-                <Image src={camera} alt='camera' />
-                <input type="text" value={message} onChange={handleChange} placeholder='Message' className='text-lg bg-slate-200 focus:outline-none rounded-xl px-4 py-2 w-[250px] transition-all shrink-0 placeholder:text-sm' />
-                <button type="submit">
-                    <Image src={send} alt='send' />
-                </button>
+            <form onSubmit={handleSubmit} className="flex w-full max-w-[430px] overflow-hidden bg-slate-100 justify-evenly fixed bottom-0 mx-0 gap-3 p-4">
+                <Image src={camera} alt='camera' className='w-2/12 h-12'/>
+                <input type="text" value={message} onChange={handleChange} autoFocus={true} placeholder='Message' className='w-8/12 text-lg focus:outline-none rounded-xl px-4 py-2 bg-inherit transition-all shrink-0 placeholder:text-sm' />
+                <Image src={send} alt='send' onClick={handleSubmit} className='w-2/12 h-12'/>
             </form>
         </>
     )
