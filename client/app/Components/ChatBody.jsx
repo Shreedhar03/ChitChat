@@ -7,6 +7,7 @@ let currentUser
 let jwt;
 
 const fetchMessages = async (chatId) => {
+    console.log("fetching message in server component")
     const cookieStore = cookies()
     const token = cookieStore.get('jwt')
     currentUser = cookieStore.get('currentUser')
@@ -17,20 +18,20 @@ const fetchMessages = async (chatId) => {
             Authorization: `Bearer ${token.value}`
         }
     })
-    // currentUser = data?.currentUser?.[0]._id
+    currentUser = data?.currentUser?.[0]._id
     return data
 }
 const ChatBody = async ({ chatId }) => {
 
     const chatBody = await fetchMessages(chatId)
     console.log("------------Messages------------")
-    console.log(chatBody)
+    console.log(chatBody.messages.length , "messages fetched")
     
     return (
         <>
             <div id='messageBodY' className='bg-slate-50 fixed flex flex-col top-28 rounded-t-[50px] h-screen w-full max-w-[450px] overflow-scroll pt-12 pb-64 px-3'>
                 <p className='text-center my-6 bg-gray-200 self-center px-3 py-1 rounded-xl text-sm'>Today</p>
-                <ChatContent chatBody={chatBody} currentUser={currentUser} chatId={chatId} token={jwt} data={chatBody} />
+                <ChatContent chatBody={chatBody.messages} currentUser={currentUser} chatId={chatId} token={jwt} data={chatBody} />
             </div>
 
             {/* <SendMessage currentUser={currentUser} /> */}

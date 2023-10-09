@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import ChatBody from '@/app/Components/ChatBody';
 import Profile from '@/app/Components/Profile';
+import LastSeen from '@/app/Components/LastSeen';
 
 const Chat = ({params}) => {
   console.log("params",params)
@@ -26,10 +27,7 @@ const Chat = ({params}) => {
           />
         </div>
 
-        <div className='text-center text-gray-300 flex items-center justify-center gap-1 mt-3'>
-          <p className={`w-3 h-3 mt-[1px] bg-green-600 rounded-full`}></p>
-          <p>online</p>
-        </div>
+        <LastSeen />
       </nav>
 
       <ul
