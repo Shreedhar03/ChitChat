@@ -4,7 +4,7 @@ import arrow from '../Assets/arrow.svg'
 import { ChatContext } from '../Context/ChatContext'
 
 const Profile = (props) => {
-    const {user,setUser} = useContext(ChatContext)
+    // const {} = useContext(ChatContext)
     return (
         <div className={`${props.show ? '-translate-y-3 py-12' : 'translate-y-full'} transition-all fixed max-w-[450px] items-center flex flex-col w-full h-screen bottom-0 border-t-2 bg-slate-50 border-primary`}>
             <Image src={arrow} alt='arrow' className='absolute top-8 left-4' width={25} onClick={() => props.setShowProfile(false)} />

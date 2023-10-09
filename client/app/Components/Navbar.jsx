@@ -8,7 +8,7 @@ import { ChatContext } from '../Context/ChatContext'
 
 const Navbar = ({currentUser}) => {
 
-    const {user,setUser} = useContext(ChatContext)
+    // const {user,setUser} = useContext(ChatContext)
 
 
     const [searchVal, setSearchVal] = useState("")

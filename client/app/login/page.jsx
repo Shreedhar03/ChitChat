@@ -10,7 +10,7 @@ import { ChatContext } from '../Context/ChatContext'
 import Cookies from 'js-cookie'
 
 const Login = () => {
-    const { setUser } = useContext(ChatContext)
+    // const { setUser } = useContext(ChatContext)
     const router = useRouter()
     const [loading, setLoading] = useState(false)
     const [msg, setMsg] = useState('')
@@ -32,7 +32,7 @@ const Login = () => {
             setMsg(data.message)
             if (data.success) {
                 Cookies.set('currentUser',data.user._id)
-                setUser(data.user.fname + data.user.lname)
+                // setUser(data.user.fname + data.user.lname)
                 Cookies.set('jwt', data.token, {
                     expires: 15, secure: true
                 })

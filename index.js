@@ -32,7 +32,6 @@ const connectToSocket = (server) => {
             console.log("userData._id", currentUser)
             socket.emit("connected")
         })
-
         socket.on("join chat", (room) => {
             socket.join(room)
             console.log(`User joined the room ${room}`.bgGreen)
@@ -59,6 +58,9 @@ const connectToSocket = (server) => {
                     socket.to(room).emit("message received", newMessageReceived)
                 }
             })
+        })
+        socket.on("online",currentUser=>{
+            socket.emit("onlineUser" , currentUser)
         })
     })
 

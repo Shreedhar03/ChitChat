@@ -63,7 +63,7 @@ const ChatContent = ({ chatId, token, chatBody, currentUser }) => {
     
     useEffect(() => {
         console.log("mounted")
-        setLastSeen("online")
+        // setLastSeen("online")
         socket.emit("setup", currentUser)
         socket.on("connection", () => console.log("connection done"))
         socket.emit("join chat", chatId)
@@ -88,24 +88,24 @@ const ChatContent = ({ chatId, token, chatBody, currentUser }) => {
             setMessages([...messages, newMessageReceived])
         })
         socket.on("senderTyping", (user) => {
-            // console.log("user", user)
-            // console.log("currentUser", currentUser)
             if (currentUser != user) {
                 setTyping(true)
-                // console.log("typing")
             }
 
         })
         socket.on("senderStoppedTyping", (user) => {
-            // console.log("user", user)
-            // console.log("currentUser", currentUser)
+            // console.log("user", user);console.log("currentUser", currentUser)
             if (currentUser != user) {
-                setTyping(false)
-                // console.log("stop typing")
+                setTyping(false);// console.log("stop typing")
             }
-
         })
-        // console.log(demo)
+        socket.on("onlineUser", (user) => {
+            // console.log("user", user);console.log("currentUser", currentUser)
+            if (currentUser != user) {
+                setLastSeen("online");// console.log("stop typing")
+            }
+        })
+        
     })
     return (
 
