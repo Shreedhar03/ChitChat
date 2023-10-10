@@ -23,7 +23,7 @@ const Navbar = ({currentUser}) => {
             <div className='flex items-center gap-2 overflow-hidden'>
                 <div className='flex'>
                     {/* <input type="text" value={searchVal} onFocus={()=>{setShowSearch(1)}} onBlur={()=>{setShowSearch(0)}} onChange={(e)=>setSearchVal(e.target.value)} className={`group-hover:w-48 focus:w-48 group-hover:translate-x-6 w-0 p-0 bg-[#4f39ca] transition-all group-hover:px-4 group-hover:py-1 ${showSearch && 'px-4 translate-x-6'} focus:outline-none rounded-lg`} /> */}
-                    <input type="text" value={searchVal} autoFocus={true} onBlur={() => { setShowSearch(0) }} onChange={(e) => setSearchVal(e.target.value)} className={`bg-[#4f39ca] transition-all ${showSearch ? 'px-4 translate-x-6 w-48' : 'p-0 translate-x-0 w-0'} focus:outline-none rounded-lg`} />
+                    <input type="text" value={searchVal} onBlur={() => { setShowSearch(0) }} onChange={(e) => setSearchVal(e.target.value)} className={`bg-[#4f39ca] transition-all ${showSearch ? 'px-4 translate-x-6 w-48' : 'p-0 translate-x-0 w-0'} focus:outline-none rounded-lg`} />
                     <Image alt='search' className={`group-hover:translate-x-24 ${showSearch && 'translate-x-24'}`} src={search} width={'30'} onClick={() => setShowSearch(1)} />
                 </div>
                 <div className='group'>

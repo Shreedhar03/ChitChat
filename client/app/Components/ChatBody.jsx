@@ -1,35 +1,13 @@
 import React from 'react'
-import axios from 'axios'
-import { cookies } from 'next/headers'
 import ChatContent from './ChatContent'
 
-let currentUser
-let jwt;
 
-const fetchMessages = async (chatId) => {
-    console.log("fetching message in server component")
-    const cookieStore = cookies()
-    const token = cookieStore.get('jwt')
-    currentUser = cookieStore.get('currentUser')
-    jwt = token.value
-    console.log("chatId", chatId)
-    let { data } = await axios.get(`${process.env.NEXT_PUBLIC_URL}/api/allMessages/${chatId}`, {
-        headers: {
-            Authorization: `Bearer ${token.value}`
-        }
-    })
-    currentUser = data?.currentUser?.[0]._id
-    return data
-}
-const ChatBody = async ({ chatId }) => {
+const ChatBody = async ({ chatId,chatBody,currentUser,jwt }) => {
 
-    const chatBody = await fetchMessages(chatId)
-    console.log("------------Messages------------")
-    console.log(chatBody.messages.length , "messages fetched")
     
     return (
         <>
-            <div id='messageBodY' className='bg-slate-50 fixed flex flex-col top-28 rounded-t-[50px] h-screen w-full max-w-[450px] overflow-scroll pt-12 pb-64 px-3'>
+            <div id='messageBodY' className='bg-slate-50 fixed flex flex-col top-24 rounded-t-[50px] h-screen w-full max-w-[450px] overflow-scroll pt-12 pb-64 px-3'>
                 <p className='text-center my-6 bg-gray-200 self-center px-3 py-1 rounded-xl text-sm'>Today</p>
                 <ChatContent chatBody={chatBody.messages} currentUser={currentUser} chatId={chatId} token={jwt} data={chatBody} />
             </div>

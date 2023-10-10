@@ -8,10 +8,12 @@ import AllUsers from '../Components/AllUsers'
 import { cookies } from 'next/headers'
 import axios from 'axios'
 import Link from 'next/link'
-
+import io from 'socket.io-client'
 let currentUser
+let socket = io(`${process.env.NEXT_PUBLIC_URL}`)
 
 const fetchUsers = async () => {
+
     const cookieStore = cookies()
     const token = cookieStore.get('jwt')
     console.log(token)
@@ -24,11 +26,13 @@ const fetchUsers = async () => {
         url: `${process.env.NEXT_PUBLIC_URL}/api/searchUser?keyword=''`
     })
     currentUser = data.currentUser
+    socket.emit("online",currentUser[0]._id,"6524ef61a3f3b15d71c601f2")
+
     return data.users
 }
 const fetchChats = async () => {
     // "use server"
-    console.log("----Fetching Ctahs----")
+    console.log("----Fetching Chats----")
     const cookieStore = cookies()
     const token = cookieStore.get('jwt')
 
@@ -45,7 +49,7 @@ const fetchChats = async () => {
     }
 
 }
-const Home = async () => {
+const Home = async ({params}) => {
     const chats = await fetchChats()
     const users = await fetchUsers()
     console.log("currentUser",currentUser)

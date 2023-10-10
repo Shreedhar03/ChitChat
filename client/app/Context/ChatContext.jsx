@@ -8,7 +8,8 @@ export const ChatContext = createContext()
 
 const ContextProvider = ({ children }) => {
 
-    const [lastSeen, setLastSeen] = useState(moment().format("DD MMM") + " at " + moment().format("HH:mm"))
+    const [lastSeen, setLastSeen] = useState("")
+    // const [lastSeen, setLastSeen] = useState(moment().format("DD MMM") + " at " + moment().format("HH:mm"))
     // const [lastSeen, setLastSeen] = useState("om")
 
     return (

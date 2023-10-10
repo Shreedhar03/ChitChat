@@ -26,7 +26,7 @@ const connectToSocket = (server) => {
     })
     io.on('connection', (socket) => {
         // console.log("connected to socket.io ")
-
+        let room
         socket.on('setup', (currentUser) => {
             socket.join(currentUser)
             console.log("userData._id", currentUser)
@@ -34,6 +34,7 @@ const connectToSocket = (server) => {
         })
         socket.on("join chat", (room) => {
             socket.join(room)
+            room = room
             console.log(`User joined the room ${room}`.bgGreen)
         })
         socket.on('typing', (room, sender) => {
@@ -47,9 +48,9 @@ const connectToSocket = (server) => {
         socket.on("new message", (newMessageReceived, room) => {
             let chat = newMessageReceived.chat
             // console.log("newMessageReceived",newMessageReceived)
-            if (!chat.users) return console.log("chat.user not defined")
+            if (!chat?.users) return console.log("chat.user not defined")
             console.log(`room ${room}`.bgGreen)
-            chat.users.forEach(user => {
+            chat?.users.forEach(user => {
                 console.log(user._id)
                 if (user._id == newMessageReceived.sender._id) {
                     return
@@ -59,8 +60,9 @@ const connectToSocket = (server) => {
                 }
             })
         })
-        socket.on("online",currentUser=>{
-            socket.emit("onlineUser" , currentUser)
+        socket.on("online",(currentUser,room)=>{
+            console.log("online" , currentUser)
+            socket.to(room).emit("onlineUser" , currentUser)
         })
     })
 

@@ -100,6 +100,8 @@ const ChatContent = ({ chatId, token, chatBody, currentUser }) => {
             }
         })
         socket.on("onlineUser", (user) => {
+            console.log("user is online" , user)
+            console.log(currentUser,"in the room")
             // console.log("user", user);console.log("currentUser", currentUser)
             if (currentUser != user) {
                 setLastSeen("online");// console.log("stop typing")
@@ -133,7 +135,7 @@ const ChatContent = ({ chatId, token, chatBody, currentUser }) => {
                 </div>
             }
 
-            <form onSubmit={handleSubmit} className="flex w-full max-w-[430px] overflow-hidden bg-slate-100 rounded-[50px] mb-4 justify-evenly fixed bottom-0 mx-0 gap-3 px-4 py-3">
+            <form onSubmit={handleSubmit} className="flex w-full max-w-[430px] overflow-hidden bg-slate-200 rounded-[50px] mb-4 justify-evenly fixed bottom-0 mx-0 gap-3 px-4 py-3">
                 <Image src={camera} alt='camera' className='w-1/12 h-12' />
                 <input type="text" value={message} onChange={handleChange} autoFocus={"autoFocus"} placeholder='Message' className='w-8/12 text-lg focus:outline-none rounded-xl px-4 py-2 bg-inherit transition-all shrink-0 placeholder:text-sm' />
                 <Image src={send} alt='send' onClick={handleSubmit} className='w-1/12 h-12' />
