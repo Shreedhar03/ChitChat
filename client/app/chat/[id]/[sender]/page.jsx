@@ -47,8 +47,8 @@ const Chat = async ({ params }) => {
             <Link href={'/home'} className='text-2xl text-gray-300'>
               <Image src={arrow} alt='arrow' /> {/* BACK Button */}
             </Link>
-            <img src={chatBody?.messages[0].sender.pic} className='w-10 h-10 object-cover rounded-full' alt='user' /> {/* BACK Button */}
-            <h1 className='text-xl justify-self-center text-gray-300'>{params.sender.split('%20').join(" ")}</h1>
+            <img src={chatBody?.messages[0]?.sender?.pic} className='w-10 h-10 object-cover rounded-full' alt='user' /> {/* BACK Button */}
+            <h1 className='text-xl justify-self-center text-gray-300'>{params.sender?.split('%20').join(" ")}</h1>
           </div>
           <Image
             src={menu}
