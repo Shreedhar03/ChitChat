@@ -13,7 +13,7 @@ let currentUser
 let jwt;
 
 const fetchMessages = async (chatId) => {
-  console.log("fetching message in server component")
+  console.log("Fetching message in server component")
   const cookieStore = cookies()
   const token = cookieStore.get('jwt')
   currentUser = cookieStore.get('currentUser')
