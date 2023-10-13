@@ -12,6 +12,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <link rel="manifest" href="../manifest.json" />
       <body className={montserrat.className}>
         <div id="root" className='max-w-[450px] mx-auto'>
           <ContextProvider>
