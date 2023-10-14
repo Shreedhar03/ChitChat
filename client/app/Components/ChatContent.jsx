@@ -119,7 +119,7 @@ const ChatContent = ({ chatId, token, chatBody, currentUser }) => {
                     let isReceiver = chat?.sender?._id === currentUser
                     // console.log(`${chat.sender._id} , ${currentUser} = ${isReceiver}`)
                     // return <Message message={chat.content} time="09:30 AM" role={"sender"} />
-                    return <div key={key} className={`max-w-[192px] flex flex-col gap-1 my-2 ${isReceiver ? 'self-end' : 'self-start'}`}>
+                    return <div key={key} className={`max-w-[192px] flex flex-col gap-1 px-2 my-2 ${isReceiver ? 'self-end' : 'self-start'}`}>
                         <Message typing={typing} message={chat.content} id={chat._id} time={chat.time} role={isReceiver ? "receiver" : "sender"} />
                     </div>
 
@@ -135,9 +135,9 @@ const ChatContent = ({ chatId, token, chatBody, currentUser }) => {
                 </div>
             }
 
-            <form onSubmit={handleSubmit} className="flex w-full max-w-[430px] overflow-hidden bg-slate-200 rounded-[50px] mb-4 justify-evenly fixed bottom-0 mx-0 gap-3 px-4 py-3">
+            <form onSubmit={handleSubmit} className="flex w-full max-w-[450px] overflow-hidden bg-slate-200 rounded-[0px] justify-evenly fixed bottom-0 mx-0 gap-3 px-4 py-3">
                 <Image src={camera} alt='camera' className='w-1/12 h-12' />
-                <input type="text" value={message} onChange={handleChange} autoFocus={"autoFocus"} placeholder='Message' className='w-8/12 text-lg focus:outline-none rounded-xl px-4 py-2 bg-inherit transition-all shrink-0 placeholder:text-sm' />
+                <input type="text" value={message} onChange={handleChange} autoFocus={"autoFocus"} placeholder='Message' className='w-8/12 text-lg focus:outline-none rounded-xll px-4 py-2 bg-inherit transition-all shrink-0 placeholder:text-sm' />
                 <Image src={send} alt='send' onClick={handleSubmit} className='w-1/12 h-12' />
             </form>
         </>

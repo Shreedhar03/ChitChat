@@ -40,7 +40,7 @@ const Chat = async ({ params }) => {
   console.log(params.sender)
 
   return (
-    <div className='relative h-screen w-full'>
+    <div className='h-screen w-full'>
       <nav className='bg-primary pt-5 pb-20 px-2 sticky top-0'>
         <div className="flex items-center justify-between">
           <div className='flex items-center gap-3'>

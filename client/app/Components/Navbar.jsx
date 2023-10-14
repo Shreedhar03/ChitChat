@@ -15,7 +15,7 @@ const Navbar = ({currentUser}) => {
     const [showSearch, setShowSearch] = useState(0)
     return (
         // <div className="relative">
-        <nav className='bg-primary text-white flex items-center justify-between p-4 sticky top-0 overflow-hidden'>
+        <nav className='bg-primary text-white flex items-center justify-between p-4 overflow-hidden'>
             <div>
                 <h1 className='text-2xl font-bold text-[#2f217d]'>ChitChat</h1>
                 <h2>Hi, {currentUser?.[0]?.fname}</h2>

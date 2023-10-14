@@ -56,18 +56,18 @@ const Home = async ({ params }) => {
     console.log("currentUser", currentUser)
     // console.log("=================Chats==================" , chats)
     return (
-        <div className='max-w-[450px] mx-auto overflow-hidden'>
-            {/* <div className='sticky top-0'> */}
+        <div className='max-w-[450px] mx-auto'>
             <Navbar currentUser={currentUser} />
-            <Tabs />
-            {/* </div> */}
+            <div className='sticky top-0'>
+                <Tabs />
+            </div>
 
             <p className='text-center my-4'>
                 <Link href={'/search'}>Connect with your Friends</Link>
             </p>
 
             <Chats chats={chats} currentUser={currentUser} />
-            <Image src={plus} alt='plus' className='fixed bottom-4 right-4' />
+            {/* <Image src={plus} alt='plus' className='fixed bottom-4 right-4' /> */}
         </div>
 
 
