@@ -12,24 +12,24 @@ import io from 'socket.io-client'
 let currentUser
 let socket = io(`${process.env.NEXT_PUBLIC_URL}`)
 
-const fetchUsers = async () => {
+// const fetchUsers = async () => {
 
-    const cookieStore = cookies()
-    const token = cookieStore.get('jwt')
-    console.log(token)
-    let { data } = await axios.request({
-        headers: {
-            Authorization: `Bearer ${token.value}`
-            // Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MDdlNWY1NWE0NGJhMDRlOGIyNjFlZSIsImlhdCI6MTY5NTQ4MTEzNSwiZXhwIjoxNjk4MDczMTM1fQ.5RzP8o0QT37tJBV9CSc-VBl6doFkQEO1i9ycfg33bzo`
-        },
-        method: "GET",
-        url: `${process.env.NEXT_PUBLIC_URL}/api/searchUser?keyword=''`
-    })
-    currentUser = data.currentUser
-    socket.emit("online",currentUser[0]._id,"6524ef61a3f3b15d71c601f2")
+//     const cookieStore = cookies()
+//     const token = cookieStore.get('jwt')
+//     console.log(token)
+//     let { data } = await axios.request({
+//         headers: {
+//             Authorization: `Bearer ${token.value}`
+//             // Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MDdlNWY1NWE0NGJhMDRlOGIyNjFlZSIsImlhdCI6MTY5NTQ4MTEzNSwiZXhwIjoxNjk4MDczMTM1fQ.5RzP8o0QT37tJBV9CSc-VBl6doFkQEO1i9ycfg33bzo`
+//         },
+//         method: "GET",
+//         url: `${process.env.NEXT_PUBLIC_URL}/api/searchUser?keyword=''`
+//     })
+//     currentUser = data.currentUser
+//     socket.emit("online",currentUser[0]._id,"6524ef61a3f3b15d71c601f2")
 
-    return data.users
-}
+//     return data.users
+// }
 const fetchChats = async () => {
     // "use server"
     console.log("----Fetching Chats----")
@@ -42,30 +42,31 @@ const fetchChats = async () => {
                 Authorization: `Bearer ${token.value}`
             }
         });
-
-        return data
+        // console.log("------x-x-x-x-x-x-x-x-x"  , data)
+        currentUser = data.currentUser
+        return data.results
     } catch (error) {
         console.error('Error:', error);
     }
 
 }
-const Home = async ({params}) => {
+const Home = async ({ params }) => {
     const chats = await fetchChats()
-    const users = await fetchUsers()
-    console.log("currentUser",currentUser)
-    console.log("=================Chats==================" , chats)
+    // const users = await fetchUsers()
+    console.log("currentUser", currentUser)
+    // console.log("=================Chats==================" , chats)
     return (
-        <div className='max-w-[450px] mx-auto relative overflow-hidden'>
-            <div className='sticky top-0'>
-                <Navbar currentUser={currentUser} />
-                <Tabs />
-            </div>
+        <div className='max-w-[450px] mx-auto overflow-hidden'>
+            {/* <div className='sticky top-0'> */}
+            <Navbar currentUser={currentUser} />
+            <Tabs />
+            {/* </div> */}
 
             <p className='text-center my-4'>
-            <Link href={'/search'}>Connect with your Friends</Link>
+                <Link href={'/search'}>Connect with your Friends</Link>
             </p>
-            <AllUsers fetchUsers={fetchUsers} currentUser={currentUser}/>
-            <Chats chats={chats} currentUser={currentUser}/>
+
+            <Chats chats={chats} currentUser={currentUser} />
             <Image src={plus} alt='plus' className='fixed bottom-4 right-4' />
         </div>
 

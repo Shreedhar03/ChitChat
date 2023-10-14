@@ -99,6 +99,9 @@ const accessChat = asyncHandler(async (req, res) => {
 // get the full chats for the logged in user
 const fetchChats = asyncHandler(async (req, res) => {
     try {
+
+        let currentUser = await userModel.find({_id:req.user})
+
         chatModel.find({
             users: { $elemMatch: { $eq: req.user._id } }
         }).populate("users", "-pass")
@@ -110,7 +113,7 @@ const fetchChats = asyncHandler(async (req, res) => {
                     select: "fname lname pic"
                 })
 
-                res.send(results)
+                res.json({results,currentUser})
             })
     } catch (err) {
         res.send(err.message)

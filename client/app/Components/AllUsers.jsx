@@ -6,7 +6,7 @@ const AllUsers = async ({ fetchUsers }) => {
     return (
         <div className='px-4 my-3'>
             <h2 className='text-xl'>Connect with your friends</h2>
-            <div className='flex gap-3 overflow-scroll mt-3'>
+            <div className='flex flex-wrap gap-3 mt-3 px-3'>
                 {
                     allUsers?.map(user => {
                         return (
