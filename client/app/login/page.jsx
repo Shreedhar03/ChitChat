@@ -4,9 +4,7 @@ import axios from 'axios'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { useContext, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import Spinner from '../Components/Spinner'
-import { ChatContext } from '../Context/ChatContext'
 import Cookies from 'js-cookie'
 
 const Login = () => {
@@ -36,7 +34,7 @@ const Login = () => {
                 Cookies.set('jwt', data.token, {
                     expires: 15, secure: true
                 })
-                router.push('/home')
+                router.replace('/home')
             }
         } catch (error) {
             console.log(error)

@@ -18,6 +18,7 @@ const fetchUsers = async () => {
         method: "GET",
         url: `${process.env.NEXT_PUBLIC_URL}/api/searchUser?keyword=''`
     })
+    console.log("data.currentUser",data.currentUser)
     currentUser = data.currentUser
     // socket.emit("online",currentUser[0]._id,"6524ef61a3f3b15d71c601f2")
 
@@ -25,6 +26,9 @@ const fetchUsers = async () => {
 }
 
 const Search = async() => {
+
+  const users = await fetchUsers()
+  console.log("currentUser in searchPage" , currentUser)
   return (
     <>
     <Navbar currentUser={currentUser}/>

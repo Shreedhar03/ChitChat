@@ -4,7 +4,7 @@ import Chats from '../Components/Chats'
 import Tabs from '../Components/Tabs'
 import Image from 'next/image'
 import plus from '../Assets/plus.svg'
-import AllUsers from '../Components/AllUsers'
+// import AllUsers from '../Components/AllUsers'
 import { cookies } from 'next/headers'
 import axios from 'axios'
 import Link from 'next/link'
@@ -32,7 +32,6 @@ let socket = io(`${process.env.NEXT_PUBLIC_URL}`)
 // }
 const fetchChats = async () => {
     // "use server"
-    console.log("----Fetching Chats----")
     const cookieStore = cookies()
     const token = cookieStore.get('jwt')
 
@@ -42,7 +41,8 @@ const fetchChats = async () => {
                 Authorization: `Bearer ${token.value}`
             }
         });
-        // console.log("------x-x-x-x-x-x-x-x-x"  , data)
+        // console.log("data.results[0]",data.results[0])
+        console.log("------x-x-x-x-x---Fetching chats---x-x-x-x------")
         currentUser = data.currentUser
         return data.results
     } catch (error) {

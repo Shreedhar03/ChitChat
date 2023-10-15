@@ -1,30 +1,39 @@
-"use client"
-import React, { useContext } from 'react'
-import { useRouter } from 'next/navigation'
-import { ChatContext } from '../Context/ChatContext'
+// "use client"
+import React from 'react'
+import Link from 'next/link'
 
 const Chats = (props) => {
     console.log("props.chats", props.chats)
-    const router = useRouter()
     console.log(props.currentUser)
     return (
         <div className='w-full'>
             {
                 props.chats?.map((chat, key) => {
+                    let userImage = chat?.users[0]._id == props.currentUser?.[0]?._id ? chat?.users[1].pic : chat?.users[0].pic
                     let sender = chat.isGroupChat ? chat.chatName : (chat?.users[0]._id == props.currentUser?.[0]?._id ? chat?.users[1].fname + " " + chat?.users[1].lname : chat?.users[0].fname + " " + chat?.users[0].lname)
                     return (
                         <div className="flex items-center justify-between px-3 py-5 bg-slate-50" key={key}>
                             <div className='flex gap-3 items-start'>
-                                <img src={chat?.users[0]._id == props.currentUser?.[0]?._id ? chat?.users[1].pic : chat?.users[0].pic} alt='user' className='w-14 h-14 rounded-full object-cover' />
-                                <div onClick={() => router.push(`/chat/${chat._id}/${sender}`)}>
-                                    <p className=''>{chat.isGroupChat ? chat.chatName : (chat?.users[0]._id == props.currentUser?.[0]?._id ? chat?.users[1].fname + " " + chat?.users[1].lname : chat?.users[0].fname + " " + chat?.users[0].lname)}</p>
-                                    {/* <p className='text-gray-500'>{chat.latestMsg.slice(0, 30)}{chat.latestMsg.length > 30 && '...'}</p> */}
-                                    <p className='text-gray-500'>
-                                        <span>{chat?.latestMessage?.sender?._id===props.currentUser[0]._id && 'You: '}</span>
-                                        <span>
-                                            {chat?.latestMessage?.content?.slice(0, 30)}{chat.latestMessage?.content?.length > 30 && '...'}
-                                        </span>
-                                    </p>
+                                <img src={userImage} alt='user' className='w-14 h-14 rounded-full object-cover' />
+                                <div>
+                                    <Link href={{
+                                        pathname:`/chat`,
+                                        query:{
+                                            userImage,
+                                            chatId:chat._id,
+                                            sender
+                                        }
+                                    }}>
+                                        <p className=''>{chat.isGroupChat ? chat.chatName : (chat?.users[0]._id == props.currentUser?.[0]?._id ? chat?.users[1].fname + " " + chat?.users[1].lname : chat?.users[0].fname + " " + chat?.users[0].lname)}</p>
+                                        {/* <p className='text-gray-500'>{chat.latestMsg.slice(0, 30)}{chat.latestMsg.length > 30 && '...'}</p> */}
+                                        <p className='text-gray-500'>
+                                            <span>{chat?.latestMessage?.sender?._id === props.currentUser[0]._id && 'You: '}</span>
+                                            <span>
+                                                {chat?.latestMessage?.content?.slice(0, 30)}{chat.latestMessage?.content?.length > 30 && '...'}
+                                            </span>
+                                        </p>
+                                    </Link>
+
                                 </div>
                             </div>
                             <div className='flex flex-col self-start gap-2'>

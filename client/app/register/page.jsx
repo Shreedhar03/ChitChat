@@ -35,7 +35,7 @@ const Register = () => {
         console.log("submission started")
         let { data } = await axios.post(`${process.env.NEXT_PUBLIC_URL}/api/register`, { ...credentials })
         console.log(data.success, "token : ", data.token)
-        data.success && router.push('/login')
+        data.success && router.replace('/login')
         setLoading(false)
     }
     const postImage = async (pic) => {

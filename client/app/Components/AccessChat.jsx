@@ -7,8 +7,9 @@ import { useRouter } from 'next/navigation';
 
 const AccessChat = ({ user }) => {
     const router = useRouter()
-
+    
     const handleAccessChat = async (userId,name) => {
+        console.log("access chat")
         const token = Cookies.get('jwt');
 
         const body = {
@@ -21,7 +22,7 @@ const AccessChat = ({ user }) => {
                 }
             });
             console.log(response.data);
-            router.push(`/chat/${userId}/${name}`)
+            router.replace(`/home`)
         } catch (error) {
             console.error('Error:', error);
         }
