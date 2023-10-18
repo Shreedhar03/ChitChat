@@ -5,8 +5,8 @@ import AllUsers from '../Components/AllUsers'
 import Navbar from '../Components/Navbar'
 
 let currentUser
-const fetchUsers = async () => {
-
+const fetchUsers = async (keyword) => {
+    "use server"
     const cookieStore = cookies()
     const token = cookieStore.get('jwt')
     console.log(token)
@@ -16,7 +16,7 @@ const fetchUsers = async () => {
             // Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MDdlNWY1NWE0NGJhMDRlOGIyNjFlZSIsImlhdCI6MTY5NTQ4MTEzNSwiZXhwIjoxNjk4MDczMTM1fQ.5RzP8o0QT37tJBV9CSc-VBl6doFkQEO1i9ycfg33bzo`
         },
         method: "GET",
-        url: `${process.env.NEXT_PUBLIC_URL}/api/searchUser?keyword=''`
+        url: `${process.env.NEXT_PUBLIC_URL}/api/searchUser?keyword=${keyword}`
     })
     console.log("data.currentUser",data.currentUser)
     currentUser = data.currentUser
@@ -33,7 +33,7 @@ const Search = async() => {
     <>
     <Navbar currentUser={currentUser}/>
     <div>
-      <AllUsers fetchUsers={fetchUsers} currentUser={currentUser}/>
+      <AllUsers allUsers={users} currentUser={currentUser}/>
     </div>
     </>
   )

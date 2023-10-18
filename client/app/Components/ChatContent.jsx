@@ -2,7 +2,7 @@
 
 import React, { useContext, useEffect, useState } from 'react'
 import send from '../Assets/send.svg'
-import camera from '../Assets/camera.svg'
+import emoji from '../Assets/emoji.svg'
 import Image from 'next/image'
 import axios from 'axios'
 import io from 'socket.io-client'
@@ -10,6 +10,8 @@ import Message from './Message'
 import moment from 'moment'
 import Cookies from 'js-cookie'
 import { ChatContext } from '../Context/ChatContext'
+import data from '@emoji-mart/data'
+import Picker from '@emoji-mart/react'
 
 
 let socket = io(`${process.env.NEXT_PUBLIC_URL}`)
@@ -25,6 +27,7 @@ const ChatContent = ({ chatId, token, chatBody, currentUser }) => {
     const [dated, setDated] = useState(moment().format("DD MMM YYYY"))
     const [typing, setTyping] = useState(false)
     const [autoFocus, setAutoFocus] = useState(false)
+    const [showEmoji, setShowEmoji] = useState(false)
 
     let typeTimeOut;
 
@@ -53,26 +56,30 @@ const ChatContent = ({ chatId, token, chatBody, currentUser }) => {
         // console.log("-------------------", data, "-------------------")
         console.log(data.sender._id == currentUser)
         // console.log("-------------------currentUser", currentUser, "-------------------")
+    }  
+    const handleEmoji = (e)=>{
+        console.log(e.native)
+        setMessage(message + e.native)
     }
     useEffect(() => {
         // window.scroll(0,document.getElementById('messageBody').scrollHeight)
         let div = document.getElementById('messageBodY')
         div.scroll({ top: div.scrollHeight })
-        
+
     }, [messages])
-    
+
     useEffect(() => {
         console.log("mounted")
         // setLastSeen("online")
         socket.emit("setup", currentUser)
         socket.on("connection", () => console.log("connection done"))
         socket.emit("join chat", chatId)
-        socket.emit("online",currentUser)
+        socket.emit("online", currentUser)
 
         return (() => {
             setLastSeen(moment().format("DD MMM") + " at " + moment().format("HH:mm"))
-            console.log("un mounted",lastSeen)
-            socket.emit("offline",currentUser,lastSeen)
+            console.log("un mounted", lastSeen)
+            socket.emit("offline", currentUser, lastSeen)
         })
         // socket.on()
     }, [])
@@ -100,18 +107,19 @@ const ChatContent = ({ chatId, token, chatBody, currentUser }) => {
             }
         })
         socket.on("onlineUser", (user) => {
-            console.log("user is online" , user)
-            console.log(currentUser,"in the room")
+            console.log("user is online", user)
+            console.log(currentUser, "in the room")
             // console.log("user", user);console.log("currentUser", currentUser)
             if (currentUser != user) {
                 setLastSeen("online");// console.log("stop typing")
             }
         })
-        
+
     })
     return (
 
         <>
+
 
             {
                 messages.map((chat, key) => {
@@ -135,11 +143,16 @@ const ChatContent = ({ chatId, token, chatBody, currentUser }) => {
                 </div>
             }
 
-            <form onSubmit={handleSubmit} className="flex w-full max-w-[450px] overflow-hidden bg-slate-200 rounded-[0px] justify-evenly fixed bottom-0 mx-0 gap-3 px-4 py-3">
-                <Image src={camera} alt='camera' className='w-1/12 h-12' />
-                <input type="text" value={message} onChange={handleChange} autoFocus={"autoFocus"} placeholder='Message' className='w-8/12 text-lg focus:outline-none rounded-xll px-4 py-2 bg-inherit transition-all shrink-0 placeholder:text-sm' />
-                <Image src={send} alt='send' onClick={handleSubmit} className='w-1/12 h-12' />
-            </form>
+            <div className='relative'>
+                <div className={`absolute top-4 left-4 transition-all ${true ? 'max-h-[800px]' : 'max-h-0' }  overflow-hidden`}>
+                    {showEmoji && <Picker data={data} onEmojiSelect={handleEmoji} onClickOutside={()=>setShowEmoji(false)}/>}
+                </div>
+                <form onSubmit={handleSubmit} className="flex w-full max-w-[450px] overflow-hidden bg-slate-200 rounded-[0px] justify-evenly fixed bottom-0 mx-0 gap-3 px-4 py-3">
+                    <Image src={emoji} onClick={() => setShowEmoji(!showEmoji)} alt='camera' className='w-1/12 h-12' />
+                    <input type="text" value={message} onChange={handleChange} autoFocus={"autoFocus"} placeholder='Message' className='w-8/12 text-lg focus:outline-none rounded-xll px-4 py-2 bg-inherit transition-all shrink-0 placeholder:text-sm' />
+                    <Image src={send} alt='send' onClick={handleSubmit} className='w-1/12 h-12' />
+                </form>
+            </div>
         </>
     )
 }
