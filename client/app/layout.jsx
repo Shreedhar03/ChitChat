@@ -13,6 +13,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <link rel="manifest" href="../manifest.json" />
+      <link rel="shortcut icon" href="Assets/logo.svg" type="image/x-icon" />
       <body className={montserrat.className}>
         <div id="root" className='max-w-[450px] mx-auto'>
           <ContextProvider>
