@@ -22,10 +22,10 @@ const AccessChat = ({ user }) => {
                 }
             });
             console.log(response.data);
-            router.replace(`/home`)
         } catch (error) {
             console.error('Error:', error);
         }
+        router.replace(`/home`)
     };
 
     return (

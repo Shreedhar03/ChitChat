@@ -127,7 +127,7 @@ const ChatContent = ({ chatId, token, chatBody, currentUser }) => {
                     let isReceiver = chat?.sender?._id === currentUser
                     // console.log(`${chat.sender._id} , ${currentUser} = ${isReceiver}`)
                     // return <Message message={chat.content} time="09:30 AM" role={"sender"} />
-                    return <div key={key} className={`max-w-[192px] flex flex-col gap-1 px-2 my-2 ${isReceiver ? 'self-end' : 'self-start'}`}>
+                    return <div key={key} className={`max-w-[192px] flex flex-col rounded-xl py-2 mt-[2px] mx-2 ${isReceiver ? 'self-end bg-primary text-gray-200' : 'self-start bg-slate-200'}`}>
                         <Message typing={typing} message={chat.content} id={chat._id} time={chat.time} role={isReceiver ? "receiver" : "sender"} />
                     </div>
 

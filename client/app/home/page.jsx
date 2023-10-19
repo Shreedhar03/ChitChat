@@ -4,6 +4,7 @@ import Chats from '../Components/Chats'
 import Tabs from '../Components/Tabs'
 import Image from 'next/image'
 import plus from '../Assets/plus.svg'
+import connect from '../Assets/connect.svg'
 // import AllUsers from '../Components/AllUsers'
 import { cookies } from 'next/headers'
 import axios from 'axios'
@@ -56,18 +57,23 @@ const Home = async ({ params }) => {
     console.log("currentUser", currentUser)
     // console.log("=================Chats==================" , chats)
     return (
-        <div className='max-w-[450px] mx-auto'>
-            <Navbar currentUser={currentUser} />
+        <div className='max-w-[450px] h-screen mx-auto relative'>
+            <Navbar currentUser={currentUser} flag={true} />
             <div className='sticky top-0'>
                 <Tabs />
             </div>
 
-            <p className='text-center my-4'>
-                <Link href={'/search'}>Connect with your Friends</Link>
-            </p>
+            {/* <div className='my-4'>
+                <Link href={'/search'} className='flex items-center justify-center gap-2'>
+                    <p>Connect with your Friends</p>
+                    <Image src={connect} alt='connect' />
+                </Link>
+            </div> */}
 
             <Chats chats={chats} currentUser={currentUser} />
-            {/* <Image src={plus} alt='plus' className='fixed bottom-4 right-4' /> */}
+            <Link href={'/search'}>
+                <Image src={plus} alt='plus' className='absolute bottom-4 right-4' />
+            </Link>
         </div>
 
 
