@@ -5,6 +5,8 @@ import AllUsers from '../Components/AllUsers'
 import Navbar from '../Components/Navbar'
 import connect from '../Assets/connectHero.svg'
 import Image from 'next/image'
+import Link from 'next/link'
+import CreateNew from '../Components/CreateNew'
 
 let currentUser
 const fetchUsers = async (keyword) => {
@@ -32,16 +34,15 @@ const Search = async () => {
   const users = await fetchUsers()
   console.log("currentUser in searchPage", currentUser)
   return (
-    <>
+    <div className='relative h-screen overflow-hidden'>
       <Navbar currentUser={currentUser} flag={false} />
-      <h2 className='text-xl text-center my-3'>Connect with your friends</h2>
-      <div className='flex justify-center my-6'>
+      
+      <div className='flex justify-center my-12 mb-6'>
         <Image src={connect} alt='connect' />
       </div>
-      <div>
-        <AllUsers allUsers={users} currentUser={currentUser} />
-      </div>
-    </>
+
+      <CreateNew currentUser={currentUser} users={users}/>
+    </div>
   )
 }
 

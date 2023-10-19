@@ -43,7 +43,7 @@ const fetchChats = async () => {
             }
         });
         // console.log("data.results[0]",data.results[0])
-        console.log("------x-x-x-x-x---Fetching chats---x-x-x-x------")
+        console.log("------x-x-x-x-x---Fetching All chats in /home---x-x-x-x------")
         currentUser = data.currentUser
         return data.results
     } catch (error) {

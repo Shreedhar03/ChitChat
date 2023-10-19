@@ -3,8 +3,8 @@ import React from 'react'
 import Link from 'next/link'
 
 const Chats = (props) => {
-    console.log("props.chats", props.chats)
-    console.log(props.currentUser)
+    // console.log("props.chats", props.chats)
+    // console.log(props.currentUser)
     return (
         <div className='w-full'>
             {
