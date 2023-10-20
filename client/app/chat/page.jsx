@@ -33,7 +33,8 @@ const Chat = async ({ searchParams }) => {
   console.log(chatBody.messages.length, "messages fetched")
   console.log(chatBody)
   console.log(searchParams.userImage)
-
+  console.log(searchParams.isGroupChat)
+  console.log(searchParams.users)
   console.log("params", searchParams)
   console.log(searchParams.sender)
 
@@ -43,7 +44,7 @@ const Chat = async ({ searchParams }) => {
       <ChatNav sender={ searchParams.sender.split("%20").join(" ") } userImage={searchParams.userImage}/>
       <ChatBody chatId={searchParams.chatId} chatBody={chatBody} currentUser={currentUser} jwt={jwt} />
 
-      {/* <Profile show={showProfile} setShowProfile={setShowProfile} settingsRef={settingsRef}/> */}
+      <Profile chatTitle={searchParams.sender.split("%20").join(" ")} image={searchParams.userImage} isGroupChat={searchParams.isGroupChat}/>
       {/* <Profile show={showProfile} setShowProfile={setShowProfile} settingsRef={settingsRef}/> */}
 
     </div>

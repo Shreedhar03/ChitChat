@@ -3,25 +3,31 @@ import React from 'react'
 import Link from 'next/link'
 
 const Chats = (props) => {
-    // console.log("props.chats", props.chats)
-    // console.log(props.currentUser)
     return (
         <div className='w-full'>
             {
                 props.chats?.map((chat, key) => {
-                    let userImage = chat?.users[0]._id == props.currentUser?.[0]?._id ? chat?.users[1].pic : chat?.users[0].pic
+                    let userImage;
+                    if (chat.isGroupChat) {
+                        userImage = "https://t4.ftcdn.net/jpg/02/01/10/87/360_F_201108775_UMAoFXBAsSKNcr53Ip5CTSy52Ajuk1E4.jpg"
+                    } else {
+                        userImage = chat?.users[0]._id == props.currentUser?.[0]?._id ? chat?.users[1].pic : chat?.users[0].pic
+                    }
                     let sender = chat.isGroupChat ? chat.chatName : (chat?.users[0]._id == props.currentUser?.[0]?._id ? chat?.users[1].fname + " " + chat?.users[1].lname : chat?.users[0].fname + " " + chat?.users[0].lname)
+                    let users = chat.users ;
                     return (
                         <div className="flex items-center justify-between px-3 py-5 bg-slate-50" key={key}>
                             <div className='flex gap-3 items-start'>
                                 <img src={userImage} alt='user' className='w-14 h-14 rounded-full object-cover' />
                                 <div>
                                     <Link href={{
-                                        pathname:`/chat`,
-                                        query:{
+                                        pathname: `/chat`,
+                                        query: {
                                             userImage,
-                                            chatId:chat._id,
-                                            sender
+                                            chatId: chat._id,
+                                            sender,
+                                            isGroupChat: chat.isGroupChat,
+                                            users
                                         }
                                     }}>
                                         <p className=''>{chat.isGroupChat ? chat.chatName : (chat?.users[0]._id == props.currentUser?.[0]?._id ? chat?.users[1].fname + " " + chat?.users[1].lname : chat?.users[0].fname + " " + chat?.users[0].lname)}</p>
@@ -49,17 +55,3 @@ const Chats = (props) => {
 }
 
 export default Chats
-
-
-// const messagesData = [
-//     { photo: "https://t4.ftcdn.net/jpg/03/59/58/91/360_F_359589186_JDLl8dIWoBNf1iqEkHxhUeeOulx0wOC5.jpg", nos: 2, sender: "Rahul", latestMsg: "I won't be attending lectures....!", time: "16:05" },
-//     { photo: "https://t4.ftcdn.net/jpg/03/59/58/91/360_F_359589186_JDLl8dIWoBNf1iqEkHxhUeeOulx0wOC5.jpg", nos: 1, sender: "Alice", latestMsg: "Can you send me the notes from yesterday's class?", time: "16:12" },
-//     { photo: "https://t4.ftcdn.net/jpg/03/59/58/91/360_F_359589186_JDLl8dIWoBNf1iqEkHxhUeeOulx0wOC5.jpg", nos: 4, sender: "David", latestMsg: "Sure, I'll send them right away.", time: "16:15" },
-//     { photo: "https://t4.ftcdn.net/jpg/03/59/58/91/360_F_359589186_JDLl8dIWoBNf1iqEkHxhUeeOulx0wOC5.jpg", nos: 0, sender: "Emily", latestMsg: "Hey, how's it going?", time: "16:30" },
-//     { photo: "https://t4.ftcdn.net/jpg/03/59/58/91/360_F_359589186_JDLl8dIWoBNf1iqEkHxhUeeOulx0wOC5.jpg", nos: 0, sender: "Sophia", latestMsg: "I heard there's an assignment due next week.", time: "16:45" },
-//     { photo: "https://t4.ftcdn.net/jpg/03/59/58/91/360_F_359589186_JDLl8dIWoBNf1iqEkHxhUeeOulx0wOC5.jpg", nos: 1, sender: "Liam", latestMsg: "Yeah, I need to start working on it.", time: "17:02" },
-//     { photo: "https://t4.ftcdn.net/jpg/03/59/58/91/360_F_359589186_JDLl8dIWoBNf1iqEkHxhUeeOulx0wOC5.jpg", nos: 1, sender: "Olivia", latestMsg: "Do you have any plans for the weekend?", time: "17:20" },
-//     { photo: "https://t4.ftcdn.net/jpg/03/59/58/91/360_F_359589186_JDLl8dIWoBNf1iqEkHxhUeeOulx0wOC5.jpg", nos: 7, sender: "Mason", latestMsg: "Not yet, maybe we can go hiking.", time: "17:35" },
-//     { photo: "https://t4.ftcdn.net/jpg/03/59/58/91/360_F_359589186_JDLl8dIWoBNf1iqEkHxhUeeOulx0wOC5.jpg", nos: 1, sender: "Ava", latestMsg: "Sounds like a great idea!", time: "17:45" },
-//     { photo: "https://t4.ftcdn.net/jpg/03/59/58/91/360_F_359589186_JDLl8dIWoBNf1iqEkHxhUeeOulx0wOC5.jpg", nos: 1, sender: "Ethan", latestMsg: "I'm in! Let's do it.", time: "18:00" }
-// ]

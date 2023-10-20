@@ -2,20 +2,20 @@
 
 import Image from 'next/image'
 import React from 'react'
-import back from '../Assets/leftArrow.svg'
+import back from '../Assets/cross.svg'
 import user from '../Assets/user.svg'
 import AllUsers from './AllUsers'
 
-const NewChat = ({ showNewChat, handleClickChat,users,currentUser }) => {
+const NewChat = ({ showNewChat, handleClickChat,users,currentUser,createChat }) => {
     return (
-        <div className={`absolute h-full bottom-0 right-0 left-0 backdrop-blur-2xl p-3 transition-all ${showNewChat ? 'translate-y-0' : 'translate-y-full'}`}>
-            <nav className='flex items-center gap-4'>
+        <div className={`absolute h-full overflow-scroll bottom-0 right-0 left-0 bg-white p-3 transition-all ${showNewChat ? 'translate-x-0' : 'translate-x-full'}`}>
+            <nav className='flex items-center gap-4 sticky top-0 bg-white'>
                 <button onClick={handleClickChat}>
                     <Image src={back} />
                 </button>
-                <div className='flex items-center gap-2'>
+                <div className='flex items-center gap-1'>
                     <Image src={user} />
-                    <h1 className='text-white font-medium text-xl text-center'>
+                    <h1 className='text-black font-medium text-lg text-center'>
                         New Chat
                     </h1>
                 </div>
@@ -23,7 +23,7 @@ const NewChat = ({ showNewChat, handleClickChat,users,currentUser }) => {
 
 
             <div>
-                <AllUsers allUsers={users} currentUser={currentUser} />
+                <AllUsers allUsers={users} currentUser={currentUser} createChat={true}/>
             </div>
 
         </div>

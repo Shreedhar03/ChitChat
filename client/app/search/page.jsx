@@ -34,12 +34,13 @@ const Search = async () => {
   const users = await fetchUsers()
   console.log("currentUser in searchPage", currentUser)
   return (
-    <div className='relative h-screen overflow-hidden'>
+    <div className='relative h-screen flex flex-col justify-between pb-24 overflow-hidden'>
       <Navbar currentUser={currentUser} flag={false} />
       
-      <div className='flex justify-center my-12 mb-6'>
+      <div className='flex justify-center'>
         <Image src={connect} alt='connect' />
       </div>
+        <p className='text-2xl font-semibold text-gray-700 text-center'>Connect with your friends</p>
 
       <CreateNew currentUser={currentUser} users={users}/>
     </div>

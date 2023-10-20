@@ -72,7 +72,7 @@ const Home = async ({ params }) => {
 
             <Chats chats={chats} currentUser={currentUser} />
             <Link href={'/search'}>
-                <Image src={plus} alt='plus' className='absolute bottom-4 right-4' />
+                <Image src={plus} alt='plus' className='fixed bottom-4 right-4' />
             </Link>
         </div>
 

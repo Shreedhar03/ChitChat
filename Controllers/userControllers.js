@@ -120,7 +120,10 @@ const fetchChats = asyncHandler(async (req, res) => {
     }
 })
 const createGroupChat = asyncHandler(async (req, res) => {
-    let users = JSON.parse(req.body.users)
+
+    console.log(`${req.body.users[0]}`.bgMagenta)
+    console.log(`${req.body.chatName}`.bgYellow)
+    let users = (req.body.users)
     if (users.length < 2) {
         return res.send("More than 2 users required")
     }
@@ -142,7 +145,7 @@ const createGroupChat = asyncHandler(async (req, res) => {
 
         res.json({ fullGroupChat })
     } catch (error) {
-
+        console.log(`${error.message}`.bgRed)
     }
 })
 // send messages
@@ -179,7 +182,7 @@ const sendMessage = asyncHandler(async (req, res) => {
 const allMessages = asyncHandler(async (req, res) => {
     try {
         const messages = await messageModel.find({chat:req.params.chatId}).populate("sender","fname lname pic").populate("chat")
-        const currentUser = await userModel.find({ _id: { $eq: req.user._id } }) // get all users and search on client side
+        const currentUser = await userModel.find({ _id: { $eq: req.user._id } })
         res.json({messages,currentUser})
     } catch (err) {
         res.send(err.message)

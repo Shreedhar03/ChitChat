@@ -1,17 +1,19 @@
 'use client'
 
-import React from 'react'
+import React, { useContext } from 'react'
 import arrow from '../Assets/leftArrow.svg';
 import menu from '../Assets/menu1.svg';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
+import { ChatContext } from '../Context/ChatContext';
 
 
 const ChatNav = (props) => {
 
     const router = useRouter()
+    const { showProfile, setShowProfile } = useContext(ChatContext)
 
     // console.log(userImage)
     return (
@@ -19,7 +21,7 @@ const ChatNav = (props) => {
             <nav className='bg-primary pt-5 pb-20 px-2 sticky top-0'>
                 <div className="flex items-center justify-between">
                     <div className='flex items-center gap-3'>
-                        <div onClick={()=>router.replace('/home')} className='text-2xl text-gray-300'>
+                        <div onClick={() => router.replace('/home')} className='text-2xl text-gray-300'>
                             <Image src={arrow} alt='arrow' /> {/* BACK Button */}
                         </div>
                         <img src={props.userImage} className='w-10 h-10 object-cover rounded-full' alt='user' />
@@ -29,7 +31,7 @@ const ChatNav = (props) => {
                         src={menu}
                         alt='menu'
                         className='group'
-                    // onClick={() => setShowSetting(!showSetting)}
+                        onClick={() => setShowProfile(!showProfile)}
                     />
                 </div>
 
