@@ -36,11 +36,11 @@ const AccessChat = ({ user, createChat, groupUsers, setGroupUsers }) => {
             createSingleChat(user._id, user.fname + " " + user.lname)
         }
         else {
-            if (groupUsers.includes(user)) {
-                let temp = groupUsers.filter(u => u._id !== user._id)
-                setGroupUsers(temp)
+            if (groupUsers?.includes(user)) {
+                let temp = groupUsers?.filter(u => u._id !== user._id)
+                groupUsers && setGroupUsers(temp)
             } else {
-                setGroupUsers([...groupUsers, user])
+                groupUsers && setGroupUsers([...groupUsers, user])
             }
 
         }

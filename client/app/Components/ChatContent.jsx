@@ -143,8 +143,8 @@ const ChatContent = ({ chatId, token, chatBody, currentUser }) => {
                 </div>
             }
 
-            <div className='relative'>
-                <div className={`absolute top-4 left-4 transition-all ${true ? 'max-h-[800px]' : 'max-h-0' }  overflow-hidden`}>
+            <div className='bg-orange-500'>
+                <div className={`fixed bottom-20 left-4 transition-all ${true ? 'max-h-[800px]' : 'max-h-0' }  overflow-hidden`}>
                     {showEmoji && <Picker data={data} onEmojiSelect={handleEmoji} onClickOutside={()=>setShowEmoji(false)}/>}
                 </div>
                 <form onSubmit={handleSubmit} className="flex w-full max-w-[450px] overflow-hidden bg-slate-200 rounded-[0px] justify-evenly fixed bottom-0 mx-0 gap-3 px-4 py-3">

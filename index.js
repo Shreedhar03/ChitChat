@@ -19,7 +19,7 @@ app.use('/api', route)
 
 const connectToSocket = (server) => {
     const io = require('socket.io')(server, {
-        pingTimeout: 600000,
+        pingTimeout: 3600000,
         cors: {
             origin: `${process.env.URL}`
         }

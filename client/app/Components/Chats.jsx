@@ -3,6 +3,8 @@ import React from 'react'
 import Link from 'next/link'
 
 const Chats = (props) => {
+    console.log("---------------------------------------------------")
+    console.log(props.chats)
     return (
         <div className='w-full'>
             {
@@ -14,6 +16,7 @@ const Chats = (props) => {
                         userImage = chat?.users[0]._id == props.currentUser?.[0]?._id ? chat?.users[1].pic : chat?.users[0].pic
                     }
                     let sender = chat.isGroupChat ? chat.chatName : (chat?.users[0]._id == props.currentUser?.[0]?._id ? chat?.users[1].fname + " " + chat?.users[1].lname : chat?.users[0].fname + " " + chat?.users[0].lname)
+                    let admin = chat.groupAdmin?.fname + chat.groupAdmin?.lname
                     let users = chat.users ;
                     return (
                         <div className="flex items-center justify-between px-3 py-5 bg-slate-50" key={key}>
@@ -27,7 +30,8 @@ const Chats = (props) => {
                                             chatId: chat._id,
                                             sender,
                                             isGroupChat: chat.isGroupChat,
-                                            users
+                                            users: JSON.stringify(users),
+                                            admin
                                         }
                                     }}>
                                         <p className=''>{chat.isGroupChat ? chat.chatName : (chat?.users[0]._id == props.currentUser?.[0]?._id ? chat?.users[1].fname + " " + chat?.users[1].lname : chat?.users[0].fname + " " + chat?.users[0].lname)}</p>
