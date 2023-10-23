@@ -17,17 +17,17 @@ const Profile = ({ chatTitle, image, isGroupChat, groupUsers, admin }) => {
                 <img src={image} alt='pic' className='self-center w-28 h-28 object-cover rounded-full z-50 mb-6' />
                 <h1 className='text-3xl font-semibold text-primary'>{chatTitle}</h1>
                 {
-                    isGroupChat===true && <h2>Created by {admin}</h2>
+                    isGroupChat=="true" && <h2>Created by {admin}</h2>
                 }
                 <h1 className='text-lg mt-4'>
                     {
-                        isGroupChat===true ? 'Group members' : "Can't talk. ChitChat only"
+                        isGroupChat=="true" ? 'Group members' : "Can't talk. ChitChat only"
                     }
                 </h1>
 
                 <div className='grid grid-cols-2 gap-4 my-6'>
                     {
-                        isGroupChat===true &&
+                        isGroupChat=="true" &&
 
 
                         groupUsers?.map(user => {
@@ -38,7 +38,7 @@ const Profile = ({ chatTitle, image, isGroupChat, groupUsers, admin }) => {
                     }
                 </div>
                 {
-                    isGroupChat===true &&
+                    isGroupChat=="true" &&
                     <button className='self-start rounded-lg px-4 py-2 bg-red-800 opacity-80 text-white'>Exit Group</button>
                 }
             </div>

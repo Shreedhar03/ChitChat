@@ -32,12 +32,9 @@ const Chat = async ({ searchParams }) => {
   console.log("------------Messages------------")
   console.log(chatBody.messages.length, "messages fetched")
   console.dir(chatBody)
-  console.log(searchParams.userImage)
+
   console.log(searchParams.isGroupChat)
   const groupUsers = JSON.parse(searchParams.users)
-  console.log("params", searchParams)
-  console.log(searchParams.sender)
-  console.log(searchParams.admin)
 
   return (
     <div className='h-screen w-full'>
