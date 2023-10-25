@@ -1,10 +1,8 @@
-// "use client"
 import React from 'react'
 import Link from 'next/link'
 
 const Chats = (props) => {
     console.log("---------------------------------------------------")
-    console.log(props.chats)
     return (
         <div className='w-full'>
             {
