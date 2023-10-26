@@ -12,21 +12,21 @@ import io from 'socket.io-client'
 let currentUser
 let socket = io(`${process.env.NEXT_PUBLIC_URL}`)
 
-const fetchChats = async (token) => {
+async function fetchChats(token) {
     try {
+        console.log("------x-x-x-x-x---Fetching All chats in /home---x-x-x-x------");
         const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/fetchChats`, {
+            next: {
+                revalidate: 0
+            },
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token.value}`
-            },
-            next:{
-                revalidate:0
             }
         });
 
         const data = await response.json();
 
-        console.log("------x-x-x-x-x---Fetching All chats in /home---x-x-x-x------");
         currentUser = data.currentUser;
 
         return data.results;
@@ -35,7 +35,7 @@ const fetchChats = async (token) => {
     }
 }
 
-export default async function Home () {
+export default async function Home() {
     const cookieStore = cookies()   // this make Home.jsx as `dynamic rendering`
     const token = cookieStore.get('jwt')
     const chats = await fetchChats(token)

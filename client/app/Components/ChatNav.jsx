@@ -11,9 +11,13 @@ import { ChatContext } from '../Context/ChatContext';
 
 
 const ChatNav = (props) => {
-
     const router = useRouter()
     const { showProfile, setShowProfile } = useContext(ChatContext)
+
+    const handleBack = ()=>{
+        router.replace("/home")
+        router.refresh()
+    }
 
     // console.log(userImage)
     return (
@@ -21,9 +25,12 @@ const ChatNav = (props) => {
             <nav className='bg-primary pt-5 pb-20 px-2 sticky top-0'>
                 <div className="flex items-center justify-between">
                     <div className='flex items-center gap-3'>
-                        <button onClick={()=>router.replace('/home')} className='text-2xl text-gray-300'>
+                        <button onClick={handleBack} className='text-2xl text-gray-300'>
                             <Image src={arrow} alt='arrow' /> {/* BACK Button */}
                         </button>
+                        {/* <button onClick={()=>router.replace('/home')} className='text-2xl text-gray-300'> */}
+                            {/* <Image src={arrow} alt='arrow' /> BACK Button */}
+                        {/* </button> */}
                         <img src={props.userImage} className='w-10 h-10 object-cover rounded-full' alt='user' />
                         <h1 className='text-xl justify-self-center text-gray-300'>{props.sender}</h1>
                     </div>
