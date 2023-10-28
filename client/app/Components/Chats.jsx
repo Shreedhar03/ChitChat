@@ -14,7 +14,7 @@ const Chats = (props) => {
                         userImage = chat?.users[0]._id == props.currentUser?.[0]?._id ? chat?.users[1].pic : chat?.users[0].pic
                     }
                     let sender = chat.isGroupChat ? chat.chatName : (chat?.users[0]._id == props.currentUser?.[0]?._id ? chat?.users[1].fname + " " + chat?.users[1].lname : chat?.users[0].fname + " " + chat?.users[0].lname)
-                    let admin = chat.groupAdmin?.fname + chat.groupAdmin?.lname
+                    let admin = chat.groupAdmin?.fname + " " + chat.groupAdmin?.lname
                     let users = chat.users ;
                     return (
                         <div className="flex items-center justify-between px-3 py-5 bg-slate-50" key={key}>
@@ -34,8 +34,11 @@ const Chats = (props) => {
                                     }}>
                                         <p className=''>{chat.isGroupChat ? chat.chatName : (chat?.users[0]._id == props.currentUser?.[0]?._id ? chat?.users[1].fname + " " + chat?.users[1].lname : chat?.users[0].fname + " " + chat?.users[0].lname)}</p>
                                         {/* <p className='text-gray-500'>{chat.latestMsg.slice(0, 30)}{chat.latestMsg.length > 30 && '...'}</p> */}
-                                        <p className='text-gray-500'>
-                                            <span>{chat?.latestMessage?.sender?._id === props.currentUser[0]._id && 'You: '}</span>
+                                        <p className='text-gray-500 text-sm'>
+                                            {
+                                                chat?.isGroupChat ? <span>{chat?.latestMessage?.sender?._id !== props.currentUser[0]._id && chat?.latestMessage?.sender?.fname}: </span> : 
+                                                <span>{chat?.latestMessage?.sender?._id === props.currentUser[0]._id && 'You: '}</span>
+                                            }
                                             <span>
                                                 {chat?.latestMessage?.content?.slice(0, 30)}{chat.latestMessage?.content?.length > 30 && '...'}
                                             </span>

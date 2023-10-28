@@ -8,8 +8,8 @@ import AllUsers from './AllUsers'
 
 const NewChat = ({ showNewChat, handleClickChat,users,currentUser,createChat }) => {
     return (
-        <div className={`absolute h-full overflow-scroll bottom-0 right-0 left-0 bg-white p-3 transition-all ${showNewChat ? 'translate-x-0' : 'translate-x-full'}`}>
-            <nav className='flex items-center gap-4 sticky top-0 bg-white'>
+        <div className={`absolute h-full overflow-scroll bottom-0 right-0 left-0 bg-white transition-all ${showNewChat ? 'translate-x-0' : 'translate-x-full'}`}>
+            <nav className='flex items-center gap-4 p-3 sticky top-0 bg-white'>
                 <button onClick={handleClickChat}>
                     <Image src={back} />
                 </button>

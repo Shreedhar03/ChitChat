@@ -15,17 +15,17 @@ const Navbar = ({ currentUser, flag }) => {
     const [showSearch, setShowSearch] = useState(0)
     return (
         // <div className="relative">
-        <nav className='bg-primary text-white flex items-center justify-between p-4 overflow-hidden'>
+        <nav className='bg-primary text-white flex items-center justify-between p-3 overflow-hidden'>
             <div>
                 <h1 className='text-2xl font-bold text-[#2f217d]'>ChitChat</h1>
                 <h2>Hi, {currentUser?.[0]?.fname}</h2>
             </div>
             <div className='flex items-center gap-2 overflow-hidden'>
-                <div className='flex'>
-                    {/* <input type="text" value={searchVal} onFocus={()=>{setShowSearch(1)}} onBlur={()=>{setShowSearch(0)}} onChange={(e)=>setSearchVal(e.target.value)} className={`group-hover:w-48 focus:w-48 group-hover:translate-x-6 w-0 p-0 bg-[#4f39ca] transition-all group-hover:px-4 group-hover:py-1 ${showSearch && 'px-4 translate-x-6'} focus:outline-none rounded-lg`} /> */}
+                {/* <div className='flex'>
+                    <input type="text" value={searchVal} onFocus={()=>{setShowSearch(1)}} onBlur={()=>{setShowSearch(0)}} onChange={(e)=>setSearchVal(e.target.value)} className={`group-hover:w-48 focus:w-48 group-hover:translate-x-6 w-0 p-0 bg-[#4f39ca] transition-all group-hover:px-4 group-hover:py-1 ${showSearch && 'px-4 translate-x-6'} focus:outline-none rounded-lg`} />
                     <input type="text" value={searchVal} onBlur={() => { setShowSearch(0) }} onChange={(e) => setSearchVal(e.target.value)} className={`bg-[#4f39ca] transition-all ${showSearch ? 'px-4 translate-x-6 w-48' : 'p-0 translate-x-0 w-0'} focus:outline-none rounded-lg`} />
                     {flag && <Image alt='search' className={`group-hover:translate-x-24 ${showSearch && 'translate-x-24'}`} src={search} width={'30'} onClick={() => setShowSearch(1)} />}
-                </div>
+                </div> */}
                 {   flag &&
 
                     <div className='group'>

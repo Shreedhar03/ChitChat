@@ -9,6 +9,7 @@ import { cookies } from 'next/headers'
 import axios from 'axios'
 import Link from 'next/link'
 import io from 'socket.io-client'
+import NotLoggedIn from '../Components/NotLoggedIn'
 let currentUser
 let socket = io(`${process.env.NEXT_PUBLIC_URL}`)
 
@@ -42,6 +43,9 @@ export default async function Home() {
     // const users = await fetchUsers()
     // console.log("currentUser", currentUser)
     // console.log("=================Chats==================" , chats)
+    if(!token){
+        return <NotLoggedIn />
+    }
     return (
         <div className='max-w-[450px] h-screen mx-auto relative'>
             <Navbar currentUser={currentUser} flag={true} />

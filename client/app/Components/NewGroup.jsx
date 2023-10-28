@@ -42,9 +42,9 @@ const NewGroup = ({ showNewGroup, handleClickGroup, users, currentUser }) => {
     }
 
     return (
-        <div className={`absolute h-full overflow-scroll bottom-0 right-0 left-0 bg-white p-3 transition-all ${showNewGroup ? 'translate-x-0' : 'translate-x-full'}`}>
-            <nav className='flex items-center justify-between sticky top-0 bg-white'>
-                <div className='flex items-center gap-5'>
+        <div className={`absolute h-full overflow-scroll bottom-0 right-0 left-0 bg-white transition-all ${showNewGroup ? 'translate-x-0' : 'translate-x-full'}`}>
+            <nav className='flex items-center p-3 justify-between sticky top-0 bg-white'>
+                <div className='flex items-center gap-2'>
                     <button onClick={handleClickGroup}>
                         <Image src={back} />
                     </button>
@@ -57,13 +57,13 @@ const NewGroup = ({ showNewGroup, handleClickGroup, users, currentUser }) => {
                     </div>
                 </div>
 
-                <button className='bg-primary text-white p-2 rounded-lg' onClick={createGroupChat}>
+                <button className='bg-primary text-white p-2 rounded-lg text-sm' onClick={createGroupChat}>
                     Create Group
                 </button>
 
             </nav>
 
-            <div className='flex items-end gap-5 my-8'>
+            <div className='flex items-end gap-5 my-8 mx-2'>
                 <input type="text" placeholder='Group Title' value={chatName} onChange={e => setChatName(e.target.value)} className='w-3/5 text-lg bg-inherit px-2 py-1 focus:outline-none text-black placeholder:text-gray-600 placeholder:text-sm border-b-2 border-b-primary' />
 
             </div>

@@ -42,7 +42,7 @@ const Chat = async ({ searchParams }) => {
       <ChatNav sender={ searchParams.sender.split("%20").join(" ") } userImage={searchParams.userImage}/>
       <ChatBody chatId={searchParams.chatId} chatBody={chatBody} currentUser={currentUser} jwt={jwt} />
 
-      <Profile chatTitle={searchParams.sender.split("%20").join(" ")} image={searchParams.userImage} isGroupChat={searchParams.isGroupChat} admin={searchParams.admin} groupUsers={groupUsers}/>
+      <Profile chatTitle={searchParams.sender.split("%20").join(" ")} image={searchParams.userImage} isGroupChat={searchParams.isGroupChat} admin={searchParams.admin.split("%20").join(" ")} groupUsers={groupUsers}/>
       {/* <Profile show={showProfile} setShowProfile={setShowProfile} settingsRef={settingsRef}/> */}
 
     </div>

@@ -47,9 +47,9 @@ const AccessChat = ({ user, createChat, groupUsers, setGroupUsers }) => {
     }
 
     return (
-        <div className={`flex items-center gap-4 p-2 shrink-0 rounded-lg ${groupUsers?.includes(user) ? 'bg-primary text-gray-300 border border-primary  ' : 'bg-white border text-black border-primary'} `} onClick={handleClick}>
-            <img src={user.pic} className='rounded-full w-14 h-14 object-cover' alt='user' />
-            <h1>{user.fname} <br /> {user.lname}</h1>
+        <div className={`flex items-center gap-2 p-2 shrink-0 rounded-lg ${groupUsers?.includes(user) ? 'bg-primary text-gray-300 border border-primary  ' : 'bg-white border text-black border-primary'} `} onClick={handleClick}>
+            <img src={user.pic} className='rounded-full w-12 h-12 object-cover' alt='user' />
+            <h1 className='text-ellipsis w-20'>{user.fname} {user.lname}</h1>
         </div>
     )
 
