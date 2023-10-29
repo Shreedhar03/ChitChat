@@ -188,10 +188,16 @@ const allMessages = asyncHandler(async (req, res) => {
         res.send(err.message)
     }
 })
+const updatePic = asyncHandler(async(req,res)=>{
+    const id = req.user._id
+    let user = await userModel.findOne({_id:id})
+    // user.pic = req.body.pic
+    console.log(user.pic , user.fname)
+})
 const renameGroup = asyncHandler(async (req, res) => {
 })
 const addToGroup = asyncHandler(async (req, res) => {
 })
 const removeFromGroup = asyncHandler(async (req, res) => {
 })
-module.exports = { registerUser, loginUser, searchUser, accessChat, fetchChats, createGroupChat, renameGroup, addToGroup, removeFromGroup, sendMessage,allMessages }
+module.exports = { registerUser, loginUser, searchUser, accessChat, fetchChats, createGroupChat, renameGroup, addToGroup, removeFromGroup, sendMessage,allMessages,updatePic }

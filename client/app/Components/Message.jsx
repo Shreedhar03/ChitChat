@@ -3,9 +3,9 @@ import React from 'react'
 const Message = (props) => {
     return (
         <>
-        {   props.isGroupChat && props.role !== "receiver" &&
-            <p className='text-xs font-semibold text-primary self-start px-3'>{props.sender}</p>
-        }
+            {props.isGroupChat && props.role !== "receiver" &&
+                <p className='text-xs font-medium text-primary self-start px-3'>{props.sender}</p>
+            }
             <p className={`px-3 h-auto break-words`}>
                 {props.message}
             </p>

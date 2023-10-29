@@ -6,12 +6,21 @@ import arrow from '../Assets/arrow.svg'
 import { ChatContext } from '../Context/ChatContext'
 import { useSearchParams } from 'react-router-dom'
 import AccessChat from './AccessChat'
+import axios from 'axios'
 
-const Profile = ({ chatTitle, image, isGroupChat, groupUsers, admin }) => {
+const Profile = ({ chatTitle, image, isGroupChat, groupUsers, admin, jwt, currentUser }) => {
     const { showProfile, setShowProfile } = useContext(ChatContext)
     // const admin = groupUsers?.filter(user=>user.)
-    const handleClick = ()=>{
-        console.log("clicked")
+    const handleClick = async () => {
+        try {
+            let { data } = await axios.post(`${process.env.NEXT_PUBLIC_URL}/api/updatePic`, null, {
+                headers: {
+                    Authorization: `Bearer ${jwt}`
+                }
+            })
+        } catch (err) {
+            console.log(err.message)
+        }
     }
     return (
         <div className={`${showProfile ? '-translate-y-3 py-12' : 'translate-y-full'} overflow-scroll transition-all fixed max-w-[450px] items-center flex flex-col w-full h-screen bottom-0 border-t-2 bg-slate-50 border-primary`}>
@@ -19,7 +28,9 @@ const Profile = ({ chatTitle, image, isGroupChat, groupUsers, admin }) => {
             <div className='flex flex-col items-center'>
                 <div className='relative mb-6'>
                     <img src={image} alt='pic' className='self-center w-28 h-28 object-cover rounded-full z-50' />
-                    <i className='pi pi-user-edit absolute bottom-1 right-2' onClick={handleClick} style={{backgroundColor:"black",fontSize:"1rem",color:"white",padding:"4px",borderRadius:"100%",opacity:"0.75"}}></i>
+                    {currentUser &&
+                        <i className='pi pi-user-edit absolute bottom-1 right-2' onClick={handleClick} style={{ backgroundColor: "black", fontSize: "0.7rem", color: "white", padding: "6px", borderRadius: "100%", opacity: "0.75" }}></i>
+                    }
                 </div>
                 <h1 className='text-3xl font-semibold text-primary'>{chatTitle}</h1>
                 {

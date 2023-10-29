@@ -5,20 +5,20 @@ import LastSeen from '@/app/Components/LastSeen';
 import axios from 'axios'
 import { cookies } from 'next/headers'
 import ChatNav from '@/app/Components/ChatNav';
+import NotLoggedIn from '../Components/NotLoggedIn';
 
 let currentUser
 let jwt;
 
-const fetchMessages = async (chatId) => {
+const fetchMessages = async (chatId,token) => {
   console.log("Fetching message in server component")
   const cookieStore = cookies()
-  const token = cookieStore.get('jwt')
   currentUser = cookieStore.get('currentUser')
-  jwt = token.value
+  jwt = token?.value
   console.log("chatId", chatId)
   let { data } = await axios.get(`${process.env.NEXT_PUBLIC_URL}/api/allMessages/${chatId}`, {
     headers: {
-      Authorization: `Bearer ${token.value}`
+      Authorization: `Bearer ${token?.value}`
     }
   })
   currentUser = data?.currentUser?.[0]._id
@@ -26,9 +26,11 @@ const fetchMessages = async (chatId) => {
 }
 
 const Chat = async ({ searchParams }) => {
-
+  const cookieStore = cookies()
+  const token = cookieStore.get('jwt')
+  if(!token) return <NotLoggedIn />
   console.log(searchParams)
-  const chatBody = await fetchMessages(searchParams.chatId)
+  const chatBody = await fetchMessages(searchParams.chatId,token)
   console.log("------------Messages------------")
   console.log(chatBody.messages.length, "messages fetched")
   console.dir(chatBody)
@@ -42,7 +44,7 @@ const Chat = async ({ searchParams }) => {
       <ChatNav sender={ searchParams.sender.split("%20").join(" ") } userImage={searchParams.userImage}/>
       <ChatBody chatId={searchParams.chatId} chatBody={chatBody} currentUser={currentUser} jwt={jwt} />
 
-      <Profile chatTitle={searchParams.sender.split("%20").join(" ")} image={searchParams.userImage} isGroupChat={searchParams.isGroupChat} admin={searchParams.admin.split("%20").join(" ")} groupUsers={groupUsers}/>
+      <Profile jwt={jwt} chatTitle={searchParams.sender.split("%20").join(" ")} image={searchParams.userImage} isGroupChat={searchParams.isGroupChat} admin={searchParams.admin.split("%20").join(" ")} groupUsers={groupUsers}/>
       {/* <Profile show={showProfile} setShowProfile={setShowProfile} settingsRef={settingsRef}/> */}
 
     </div>

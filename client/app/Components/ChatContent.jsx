@@ -116,36 +116,54 @@ const ChatContent = ({ chatId, token, chatBody, currentUser }) => {
         })
 
     })
+    let SortedMsgs = {}
+    /*
+        {
+            24 : []
+            26: []
+        }
+    */
+    messages.forEach((chat) => {
+        if (SortedMsgs[chat.dated]) {
+            SortedMsgs[chat.dated].push(chat)
+        } else {
+            SortedMsgs[chat.dated] = [chat]
+        }
+    })
     return (
 
         <>
 
-
             {
-                messages.map((chat, key) => {
-
-                    let isReceiver = chat?.sender?._id === currentUser
-                    let isGroupChat = chat?.chat?.isGroupChat
-                    console.log("isGroupChat",isGroupChat)
-                    // console.log(`${chat.sender._id} , ${currentUser} = ${isReceiver}`)
-                    // return <Message message={chat.content} time="09:30 AM" role={"sender"} />
-                    return <div key={key} className={`max-w-[192px] flex flex-col rounded-xl py-2 mt-[2px] mx-2 ${isReceiver ? 'self-end bg-primary text-gray-200' : 'self-start bg-slate-200'}`}>
-                        <Message isGroupChat={isGroupChat} sender={chat.sender.fname} typing={typing} message={chat.content} id={chat._id} time={chat.time} role={isReceiver ? "receiver" : "sender"} />
-                    </div>
-
-                })
+                Object.entries(SortedMsgs).map(([dated, messages]) => (
+                    <>
+                        
+                        <h1 className='text-center bg-slate-300 self-center p-2 rounded-lg text-xs my-1'>{dated}</h1>
+                        {messages?.map((chat, key) => {
+                            let isReceiver = chat?.sender?._id === currentUser;
+                            let isGroupChat = chat?.chat?.isGroupChat;
+                            console.log("isGroupChat", isGroupChat);
+                            return (
+                                <div key={key} className={`max-w-[192px] flex flex-col rounded-xl py-2 mt-[2px] mx-2 ${isReceiver ? 'self-end bg-primary text-gray-200' : 'self-start bg-slate-200'}`}>
+                                    <Message Dates={SortedMsgs} isGroupChat={isGroupChat} sender={chat.sender.fname} typing={typing} message={chat.content} id={chat._id} time={chat.time} role={isReceiver ? "receiver" : "sender"} />
+                                </div>
+                            );
+                        })}
+                    </>
+                ))
             }
+
 
             {
                 typing &&
                 <div className='w-20 p-2 text-sm rounded-lg flex items-center justify-center gap-2'>
-                    <div className='w-4 h-4 bg-primary animate-pulse rounded-full'></div>
-                    <div className='w-4 h-4 bg-primary animate-pulse delay rounded-full'></div>
-                    <div className='w-4 h-4 bg-primary animate-pulse rounded-full'></div>
+                    <div className='w-4 h-4 bg-primary animate-bounce rounded-full'></div>
+                    <div className='w-4 h-4 bg-primary animate-bounce delay rounded-full'></div>
+                    <div className='w-4 h-4 bg-primary animate-bounce rounded-full'></div>
                 </div>
             }
 
-            <div className='bg-orange-500'>
+            <div>
                 <div className={`fixed bottom-20 left-4 transition-all ${true ? 'max-h-[800px]' : 'max-h-0'}  overflow-hidden`}>
                     {showEmoji && <Picker data={data} onEmojiSelect={handleEmoji} onClickOutside={() => setShowEmoji(false)} />}
                 </div>
@@ -162,3 +180,16 @@ const ChatContent = ({ chatId, token, chatBody, currentUser }) => {
 
 export default ChatContent
 
+
+
+/*
+
+let isReceiver = chat?.sender?._id === currentUser
+                    let isGroupChat = chat?.chat?.isGroupChat
+                    console.log("isGroupChat", isGroupChat)
+                    return (
+                        <div key={key} className={`max-w-[192px] flex flex-col rounded-xl py-2 mt-[2px] mx-2 ${isReceiver ? 'self-end bg-primary text-gray-200' : 'self-start bg-slate-200'}`}>
+                            <Message Dates={SortedMsgs} isGroupChat={isGroupChat} sender={chat.sender.fname} typing={typing} message={chat.content} id={chat._id} time={chat.time} role={isReceiver ? "receiver" : "sender"} />
+                        </div>
+                    )
+*/

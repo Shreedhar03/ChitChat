@@ -1,9 +1,9 @@
 import ContextProvider, { ChatContext } from './Context/ChatContext'
 import './globals.css'
-import { Montserrat } from 'next/font/google'
+import { Poppins } from 'next/font/google'
 import NextTopLoader from 'nextjs-toploader'
 import 'primeicons/primeicons.css';
-const montserrat = Montserrat({ subsets: ['latin'] })
+const montserrat = Poppins({ subsets: ['latin'] ,weight: ["400", "500", "600", "700", "800", "900"]})
 
 export const metadata = {
   title: 'ChitChat',
