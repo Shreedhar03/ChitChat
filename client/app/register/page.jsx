@@ -69,7 +69,7 @@ const Register = () => {
     return (
         <div className='h-screen bg-slate-200 flex flex-col items-center pt-12'>
             <h1 className='self-center font-bold text-2xl text-[#1c274c]'>Create an Account</h1>
-            <form className='flex flex-col mt-12 gap-3' onSubmit={handleSubmit}>
+            <form className='flex flex-col mt-12 gap-3 w-9/12' onSubmit={handleSubmit}>
                 <input type="text" onChange={handleChange} name='fname' value={credentials.fname} required className='text-lg focus:outline-none px-3 py-2 bg-slate-400 placeholder:text-gray-800 placeholder:text-[16px] text-gray-900 font-semibold rounded-xl' placeholder='First Name' autoComplete='off' />
                 <input type="text" onChange={handleChange} name='lname' value={credentials.lname} required className='text-lg focus:outline-none px-3 py-2 bg-slate-400 placeholder:text-gray-800 placeholder:text-[16px] text-gray-900 font-semibold rounded-xl' placeholder='Last Name' autoComplete='off' />
                 <input type="text" onChange={handleChange} name='username' value={credentials.username} required className='text-lg focus:outline-none px-3 py-2 bg-slate-400 placeholder:text-gray-800 placeholder:text-[16px] text-gray-900 font-semibold rounded-xl' placeholder='Username' autoComplete='off' />
