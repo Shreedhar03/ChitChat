@@ -137,7 +137,7 @@ const ChatContent = ({ chatId, token, chatBody, currentUser }) => {
             {
                 Object.entries(SortedMsgs).map(([dated, messages]) => (
                     <>
-                        
+
                         <h1 className='text-center bg-slate-300 self-center p-2 rounded-lg text-xs my-1'>{dated}</h1>
                         {messages?.map((chat, key) => {
                             let isReceiver = chat?.sender?._id === currentUser;
@@ -156,12 +156,24 @@ const ChatContent = ({ chatId, token, chatBody, currentUser }) => {
 
             {
                 typing &&
+                <div class="flex items-center">
+                    <div class="ml-4">
+                        <div class="typing flex items-center h-14">
+                            <div class="dot animate-pulse h-2 w-2 bg-gray-400 rounded-full"></div>
+                            <div class="dot animate-pulse delay ml-2 h-2 w-2 bg-gray-400 rounded-full"></div>
+                            <div class="dot animate-pulse ml-2 h-2 w-2 bg-gray-400 rounded-full"></div>
+                        </div>
+                    </div>
+                </div>
+            }
+            {/* {
+                typing &&
                 <div className='w-20 p-2 text-sm rounded-lg flex items-center justify-center gap-2'>
                     <div className='w-4 h-4 bg-primary animate-bounce rounded-full'></div>
                     <div className='w-4 h-4 bg-primary animate-bounce delay rounded-full'></div>
                     <div className='w-4 h-4 bg-primary animate-bounce rounded-full'></div>
                 </div>
-            }
+            } */}
 
             <div>
                 <div className={`fixed bottom-20 left-4 transition-all ${true ? 'max-h-[800px]' : 'max-h-0'}  overflow-hidden`}>

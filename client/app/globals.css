@@ -14,7 +14,22 @@
   background-size: cover;
 }
 .delay{
-  animation-delay: 1000ms;
+  animation-delay: 500ms!important;
+}
+
+.typing .dot {
+  animation: pulse 0.5s infinite alternate-reverse ease-in-out;
+}
+
+@keyframes pulse {
+  from {
+    transform: scale(0.5);
+    opacity: 0.5;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 /* :root {
   --foreground-rgb: black;
