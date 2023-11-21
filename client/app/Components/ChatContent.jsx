@@ -142,7 +142,7 @@ const ChatContent = ({ chatId, token, chatBody, currentUser }) => {
                         {messages?.map((chat, key) => {
                             let isReceiver = chat?.sender?._id === currentUser;
                             let isGroupChat = chat?.chat?.isGroupChat;
-                            console.log("isGroupChat", isGroupChat);
+                            // console.log("isGroupChat", isGroupChat);
                             return (
                                 <div key={key} className={`max-w-[192px] flex flex-col rounded-xl py-2 mt-[2px] mx-2 ${isReceiver ? 'self-end bg-primary text-gray-200' : 'self-start bg-slate-200'}`}>
                                     <Message Dates={SortedMsgs} isGroupChat={isGroupChat} sender={chat.sender.fname} typing={typing} message={chat.content} id={chat._id} time={chat.time} role={isReceiver ? "receiver" : "sender"} />

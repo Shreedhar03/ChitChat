@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
       <body className={montserrat.className}>
         <div id="root" className='max-w-[450px] mx-auto'>
           <ContextProvider>
-            <NextTopLoader color='#1c274c' showSpinner={false} initialPosition={0.2}/>
+            {/* <NextTopLoader color='#1c274c' showSpinner={false} initialPosition={0.2}/> */}
             {children}
           </ContextProvider>
         </div>

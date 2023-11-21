@@ -11,11 +11,11 @@ let currentUser
 let jwt;
 
 const fetchMessages = async (chatId,token) => {
-  console.log("Fetching message in server component")
+  // console.log("Fetching message in server component")
   const cookieStore = cookies()
   currentUser = cookieStore.get('currentUser')
   jwt = token?.value
-  console.log("chatId", chatId)
+  // console.log("chatId", chatId)
   let { data } = await axios.get(`${process.env.NEXT_PUBLIC_URL}/api/allMessages/${chatId}`, {
     headers: {
       Authorization: `Bearer ${token?.value}`
