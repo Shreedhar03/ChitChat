@@ -4,7 +4,6 @@ import Chats from '../Components/Chats'
 import Tabs from '../Components/Tabs'
 import Image from 'next/image'
 import plus from '../Assets/plus.svg'
-import connect from '../Assets/connect.svg'
 import { cookies } from 'next/headers'
 import axios from 'axios'
 import Link from 'next/link'
@@ -48,7 +47,7 @@ export default async function Home() {
     }
     return (
         <div className='max-w-[450px] h-screen mx-auto relative'>
-            <Navbar currentUser={currentUser} flag={true} />
+            <Navbar currentUser={currentUser} flag={false} />
             <div className='sticky top-0'>
                 <Tabs />
             </div>
